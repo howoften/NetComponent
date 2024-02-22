@@ -8,6 +8,8 @@
 
 #import <sys/utsname.h>
 #import "LLAppContext.h"
+#import "NSString+LLUUID.h"
+#import <UIKit/UIKit.h>
 
 @implementation LLAppContext
 

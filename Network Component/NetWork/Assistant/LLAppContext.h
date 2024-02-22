@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NSString+UUID.h"
 
 @interface LLAppContext : NSObject
 

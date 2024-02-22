@@ -44,6 +44,9 @@
 		2DFE43162B877D7500D6C702 /* FSMStateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F92B877D7400D6C702 /* FSMStateUtil.m */; };
 		2DFE43172B877D7500D6C702 /* ReachStateWIFI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42FA2B877D7400D6C702 /* ReachStateWIFI.m */; };
 		2DFE43182B877D7500D6C702 /* RealReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42FB2B877D7400D6C702 /* RealReachability.m */; };
+		2DFE431E2B877E5F00D6C702 /* LLKeyChainSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE431C2B877E5F00D6C702 /* LLKeyChainSaver.m */; };
+		2DFE431F2B877E5F00D6C702 /* NSString+LLUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE431D2B877E5F00D6C702 /* NSString+LLUUID.m */; };
+		2DFE43232B877FB000D6C702 /* AppleServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE43222B877FB000D6C702 /* AppleServer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -116,6 +119,12 @@
 		2DFE42F92B877D7400D6C702 /* FSMStateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSMStateUtil.m; sourceTree = "<group>"; };
 		2DFE42FA2B877D7400D6C702 /* ReachStateWIFI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateWIFI.m; sourceTree = "<group>"; };
 		2DFE42FB2B877D7400D6C702 /* RealReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealReachability.m; sourceTree = "<group>"; };
+		2DFE431A2B877E5F00D6C702 /* NSString+LLUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LLUUID.h"; sourceTree = "<group>"; };
+		2DFE431B2B877E5F00D6C702 /* LLKeyChainSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLKeyChainSaver.h; sourceTree = "<group>"; };
+		2DFE431C2B877E5F00D6C702 /* LLKeyChainSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLKeyChainSaver.m; sourceTree = "<group>"; };
+		2DFE431D2B877E5F00D6C702 /* NSString+LLUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LLUUID.m"; sourceTree = "<group>"; };
+		2DFE43212B877FB000D6C702 /* AppleServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleServer.h; sourceTree = "<group>"; };
+		2DFE43222B877FB000D6C702 /* AppleServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleServer.m; sourceTree = "<group>"; };
 		7B468FAD1D5415666EE21E27 /* Pods-NetWork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetWork_Example.debug.xcconfig"; path = "Target Support Files/Pods-NetWork_Example/Pods-NetWork_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		CF0959A0413E1924C9BEF813 /* Pods_NetWork_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetWork_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4501D19D01D66ADF845A9D0 /* Pods-NetWork_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetWork_Example.release.xcconfig"; path = "Target Support Files/Pods-NetWork_Example/Pods-NetWork_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -190,9 +199,9 @@
 		2DFE42B92B877D7400D6C702 /* NetWork */ = {
 			isa = PBXGroup;
 			children = (
-				2DFE42BA2B877D7400D6C702 /* Assistant */,
 				2DFE42CB2B877D7400D6C702 /* ServerConfig.h */,
 				2DFE42CC2B877D7400D6C702 /* responseFormat.plist */,
+				2DFE42BA2B877D7400D6C702 /* Assistant */,
 				2DFE42CD2B877D7400D6C702 /* HttpTool */,
 				2DFE42D32B877D7400D6C702 /* Client */,
 			);
@@ -202,6 +211,7 @@
 		2DFE42BA2B877D7400D6C702 /* Assistant */ = {
 			isa = PBXGroup;
 			children = (
+				2DFE43192B877E5F00D6C702 /* VirtualMacAdress */,
 				2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */,
 				2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */,
 				2DFE42BD2B877D7400D6C702 /* LLRequestRetryHandler.h */,
@@ -237,9 +247,9 @@
 		2DFE42D32B877D7400D6C702 /* Client */ = {
 			isa = PBXGroup;
 			children = (
+				2DFE42DD2B877D7400D6C702 /* LLAPIClient.h */,
 				2DFE42D42B877D7400D6C702 /* LLAPIClient.m */,
 				2DFE42D52B877D7400D6C702 /* Servers */,
-				2DFE42DD2B877D7400D6C702 /* LLAPIClient.h */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -248,10 +258,11 @@
 			isa = PBXGroup;
 			children = (
 				2DFE42D62B877D7400D6C702 /* LLBaseServer.h */,
-				2DFE42D72B877D7400D6C702 /* LLServerFactory.h */,
-				2DFE42D82B877D7400D6C702 /* WX */,
 				2DFE42DB2B877D7400D6C702 /* LLBaseServer.m */,
+				2DFE42D72B877D7400D6C702 /* LLServerFactory.h */,
 				2DFE42DC2B877D7400D6C702 /* LLServerFactory.m */,
+				2DFE42D82B877D7400D6C702 /* WX */,
+				2DFE43202B877FB000D6C702 /* Apple */,
 			);
 			path = Servers;
 			sourceTree = "<group>";
@@ -320,6 +331,26 @@
 				2DFE42FA2B877D7400D6C702 /* ReachStateWIFI.m */,
 			);
 			path = FSM;
+			sourceTree = "<group>";
+		};
+		2DFE43192B877E5F00D6C702 /* VirtualMacAdress */ = {
+			isa = PBXGroup;
+			children = (
+				2DFE431A2B877E5F00D6C702 /* NSString+LLUUID.h */,
+				2DFE431D2B877E5F00D6C702 /* NSString+LLUUID.m */,
+				2DFE431B2B877E5F00D6C702 /* LLKeyChainSaver.h */,
+				2DFE431C2B877E5F00D6C702 /* LLKeyChainSaver.m */,
+			);
+			path = VirtualMacAdress;
+			sourceTree = "<group>";
+		};
+		2DFE43202B877FB000D6C702 /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				2DFE43212B877FB000D6C702 /* AppleServer.h */,
+				2DFE43222B877FB000D6C702 /* AppleServer.m */,
+			);
+			path = Apple;
 			sourceTree = "<group>";
 		};
 		442B1B6A4F02ED235CDF7A18 /* Pods */ = {
@@ -456,9 +487,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DFE431E2B877E5F00D6C702 /* LLKeyChainSaver.m in Sources */,
 				2DFE43032B877D7400D6C702 /* LLBaseRequestModel.m in Sources */,
 				2DFE430D2B877D7500D6C702 /* PingFoundation.m in Sources */,
 				2DFE43162B877D7500D6C702 /* FSMStateUtil.m in Sources */,
+				2DFE431F2B877E5F00D6C702 /* NSString+LLUUID.m in Sources */,
 				2DFE43022B877D7400D6C702 /* LLAppContext.m in Sources */,
 				2DFE430F2B877D7500D6C702 /* LocalConnection.m in Sources */,
 				2DFE42FF2B877D7400D6C702 /* LLCommonParamsGenerator.m in Sources */,
@@ -469,6 +502,7 @@
 				2DFE430A2B877D7400D6C702 /* LLBaseServer.m in Sources */,
 				2DFE43152B877D7500D6C702 /* FSMEngine.m in Sources */,
 				2D18DDC023559CC4001A5D95 /* ViewController.m in Sources */,
+				2DFE43232B877FB000D6C702 /* AppleServer.m in Sources */,
 				2DFE43132B877D7500D6C702 /* ReachStateWWAN.m in Sources */,
 				2DFE430E2B877D7500D6C702 /* PingHelper.m in Sources */,
 				2DFE42FC2B877D7400D6C702 /* LLResponseFormatter.m in Sources */,

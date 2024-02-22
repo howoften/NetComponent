@@ -8,6 +8,7 @@
 
 #import "LLCommonParamsGenerator.h"
 #import "LLAppContext.h"
+#import <UIKit/UIKit.h>
 @implementation LLCommonParamsGenerator
 
 + (NSDictionary *)commonRequestHeaderParams {
