@@ -1,67 +1,50 @@
 //
-//  WXServer.m
-//  WXCitizenCard
+//  AppleServer.m
+//  SJTransport
 //
-//  Created by 刘江 on 2018/8/10.
+//  Created by 刘江 on 2018/8/27.
 //  Copyright © 2018年 Liujiang. All rights reserved.
 //
 
-#import "WXServer.h"
+#import "GreenCloudServer.h"
 
-NSString * const LoginTokenKey = @"LoginTokenKey";
-
-@implementation WXServer
+@implementation GreenCloudServer
 
 @synthesize developApiBaseUrl = _developApiBaseUrl, testApiBaseUrl = _testApiBaseUrl, prereleaseApiBaseUrl = _prereleaseApiBaseUrl, releaseApiBaseUrl = _releaseApiBaseUrl, customApiBaseUrl = _customApiBaseUrl;
-
 + (id<LLBaseServiceProtocol>)sharedInstance {
-    static WXServer *shared = nil;
+    static GreenCloudServer *shared = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        shared = [[WXServer alloc] init];
+        shared = [[GreenCloudServer alloc] init];
     });
     return shared;
 }
 
 - (NSString *)developApiBaseUrl {
     if (!_developApiBaseUrl) {
-        _developApiBaseUrl = @"https://wuxi.test.brightcns.cn";
+        _developApiBaseUrl = @"http://10.3.152.16:9009";
     }
     return _developApiBaseUrl;
 }
+
 - (NSString *)testApiBaseUrl {
     if (!_testApiBaseUrl) {
-        _testApiBaseUrl = @"https://wuxi.test.brightcns.cn";
+        _testApiBaseUrl = @"http://10.3.152.16:9009";
     }
     return _testApiBaseUrl;
 }
 
 - (NSString *)prereleaseApiBaseUrl {
     if (!_prereleaseApiBaseUrl) {
-        _prereleaseApiBaseUrl = @"https://wuxi.test.brightcns.cn";
+        _prereleaseApiBaseUrl = @"http://10.3.152.16:9009";
     }
     return _prereleaseApiBaseUrl;
 }
 
 - (NSString *)releaseApiBaseUrl {
     if (!_releaseApiBaseUrl) {
-        _releaseApiBaseUrl = @"https://wuxi.test.brightcns.cn";
+        _releaseApiBaseUrl = @"http://10.3.152.16:9009";
     }
     return _releaseApiBaseUrl;
 }
-
-- (NSString *)customApiBaseUrl {
-    if (!_customApiBaseUrl) {
-        _customApiBaseUrl = @"WXCitizenCard";
-    }
-    return _customApiBaseUrl;
-}
-
-- (NSDictionary *)signTokenInfo {
-   return @{
-      LoginTokenKey:@"",
-      
-      };
-}
-
 @end

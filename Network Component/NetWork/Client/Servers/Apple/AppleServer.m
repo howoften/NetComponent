@@ -12,6 +12,15 @@
 
 @synthesize developApiBaseUrl = _developApiBaseUrl, testApiBaseUrl = _testApiBaseUrl, prereleaseApiBaseUrl = _prereleaseApiBaseUrl, releaseApiBaseUrl = _releaseApiBaseUrl, customApiBaseUrl = _customApiBaseUrl;
 
++ (id<LLBaseServiceProtocol>)sharedInstance {
+    static AppleServer *shared = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shared = [[AppleServer alloc] init];
+    });
+    return shared;
+}
+
 - (NSString *)developApiBaseUrl {
     if (!_developApiBaseUrl) {
         _developApiBaseUrl = @"https://itunes.apple.com";

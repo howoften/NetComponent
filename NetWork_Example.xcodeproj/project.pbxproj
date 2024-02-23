@@ -15,6 +15,7 @@
 		2D18DDC823559CC7001A5D95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D18DDC623559CC7001A5D95 /* LaunchScreen.storyboard */; };
 		2D18DDCB23559CC7001A5D95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18DDCA23559CC7001A5D95 /* main.m */; };
 		2D18DE4C23559FCD001A5D95 /* LLRouterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18DE4B23559FCD001A5D95 /* LLRouterController.m */; };
+		2DD4C96E2B88A351002D09E8 /* GreenCloudServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD4C96D2B88A351002D09E8 /* GreenCloudServer.m */; };
 		2DFE42FC2B877D7400D6C702 /* LLResponseFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */; };
 		2DFE42FD2B877D7400D6C702 /* NSString+NetResponseVerify.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */; };
 		2DFE42FE2B877D7400D6C702 /* LLSignatureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */; };
@@ -62,6 +63,8 @@
 		2D18DDCA23559CC7001A5D95 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2D18DE4A23559FCD001A5D95 /* LLRouterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLRouterController.h; sourceTree = "<group>"; };
 		2D18DE4B23559FCD001A5D95 /* LLRouterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLRouterController.m; sourceTree = "<group>"; };
+		2DD4C96C2B88A351002D09E8 /* GreenCloudServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenCloudServer.h; sourceTree = "<group>"; };
+		2DD4C96D2B88A351002D09E8 /* GreenCloudServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GreenCloudServer.m; sourceTree = "<group>"; };
 		2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLResponseFormatter.m; sourceTree = "<group>"; };
 		2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+NetResponseVerify.m"; sourceTree = "<group>"; };
 		2DFE42BD2B877D7400D6C702 /* LLRequestRetryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLRequestRetryHandler.h; sourceTree = "<group>"; };
@@ -187,6 +190,15 @@
 			path = router;
 			sourceTree = "<group>";
 		};
+		2DD4C96B2B88A351002D09E8 /* GreeenCloud */ = {
+			isa = PBXGroup;
+			children = (
+				2DD4C96C2B88A351002D09E8 /* GreenCloudServer.h */,
+				2DD4C96D2B88A351002D09E8 /* GreenCloudServer.m */,
+			);
+			path = GreeenCloud;
+			sourceTree = "<group>";
+		};
 		2DFE42B82B877D7400D6C702 /* Network Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -236,10 +248,10 @@
 			isa = PBXGroup;
 			children = (
 				2DFE42CE2B877D7400D6C702 /* HttpLog.h */,
-				2DFE42CF2B877D7400D6C702 /* HttpTool.h */,
-				2DFE42D02B877D7400D6C702 /* HttpRequestTrace.plist */,
 				2DFE42D12B877D7400D6C702 /* HttpLog.m */,
+				2DFE42CF2B877D7400D6C702 /* HttpTool.h */,
 				2DFE42D22B877D7400D6C702 /* HttpTool.m */,
+				2DFE42D02B877D7400D6C702 /* HttpRequestTrace.plist */,
 			);
 			path = HttpTool;
 			sourceTree = "<group>";
@@ -261,6 +273,7 @@
 				2DFE42DB2B877D7400D6C702 /* LLBaseServer.m */,
 				2DFE42D72B877D7400D6C702 /* LLServerFactory.h */,
 				2DFE42DC2B877D7400D6C702 /* LLServerFactory.m */,
+				2DD4C96B2B88A351002D09E8 /* GreeenCloud */,
 				2DFE42D82B877D7400D6C702 /* WX */,
 				2DFE43202B877FB000D6C702 /* Apple */,
 			);
@@ -270,8 +283,8 @@
 		2DFE42D82B877D7400D6C702 /* WX */ = {
 			isa = PBXGroup;
 			children = (
-				2DFE42D92B877D7400D6C702 /* WXServer.m */,
 				2DFE42DA2B877D7400D6C702 /* WXServer.h */,
+				2DFE42D92B877D7400D6C702 /* WXServer.m */,
 			);
 			path = WX;
 			sourceTree = "<group>";
@@ -508,6 +521,7 @@
 				2DFE42FC2B877D7400D6C702 /* LLResponseFormatter.m in Sources */,
 				2DFE43112B877D7500D6C702 /* ReachStateUnloaded.m in Sources */,
 				2D18DDBA23559CC4001A5D95 /* AppDelegate.m in Sources */,
+				2DD4C96E2B88A351002D09E8 /* GreenCloudServer.m in Sources */,
 				2DFE43082B877D7400D6C702 /* LLAPIClient.m in Sources */,
 				2D18DDCB23559CC7001A5D95 /* main.m in Sources */,
 				2DFE43122B877D7500D6C702 /* ReachStateUnReachable.m in Sources */,
@@ -660,16 +674,20 @@
 			baseConfigurationReference = 7B468FAD1D5415666EE21E27 /* Pods-NetWork_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VSU3CW8QUS;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 4DRLM9LM74;
 				INFOPLIST_FILE = NetWork_Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brightcns.NetWork-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.liujiang.wildcard-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = uninversal;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -679,16 +697,20 @@
 			baseConfigurationReference = F4501D19D01D66ADF845A9D0 /* Pods-NetWork_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VSU3CW8QUS;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 4DRLM9LM74;
 				INFOPLIST_FILE = NetWork_Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brightcns.NetWork-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.liujiang.wildcard-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = uninversal;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

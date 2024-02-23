@@ -273,9 +273,9 @@
 }
 
 - (HttpLog *)bornHttpLog:(NSString *)requestType urlString:(NSString *)urlString param:(id)param {
-    __block BOOL beenTrace = NO;
-    if (urlString.length > 0) {
-        __block NSURL *url = [NSURL URLWithString:urlString];
+    __block BOOL beenTrace = [self.traceUrls containsObject:@"*"];
+    if (urlString.length > 0 && !beenTrace) {
+        NSURL *url = [NSURL URLWithString:urlString];
         [self.traceUrls enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([url.path isEqualToString:obj]) {
                 beenTrace = YES;

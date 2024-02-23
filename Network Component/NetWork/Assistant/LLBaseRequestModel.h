@@ -22,7 +22,7 @@
 @property (nonatomic, strong)void(^complete)(NSDictionary *response);
 @property (nonatomic, strong)void(^progress)(NSProgress *progress);
 
-@property (nonatomic, strong)NSMutableArray<LLBaseRequestModel *> *dependency;
+@property (nonatomic, strong)NSArray<LLBaseRequestModel *> *dependency;
 @property (nonatomic, strong)LLRequestRetryHandler *retryHandler;
 
 // upload

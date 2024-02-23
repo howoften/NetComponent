@@ -8,10 +8,10 @@
 
 #import "LLServerFactory.h"
 #import "WXServer.h"
+#import "AppleServer.h"
+#import "GreenCloudServer.h"
 
 @interface LLServerFactory ()
-
-@property (nonatomic, strong) NSMutableDictionary<id<NSCopying>, LLBaseServer<LLBaseServiceProtocol> *> *serverStorage;
 
 @end
 
@@ -27,37 +27,25 @@
 }
 
 + (EnvironmentType)environmentTypeOfServer:(LLServerType)serverType {
-    return [LLServerFactory shareInstance].serverStorage[@(serverType)].environmentType;
+    return [self serverWithType:serverType].environmentType;
 }
 
 + (LLBaseServer<LLBaseServiceProtocol> *)serverWithType:(LLServerType)serverType {
-    if (![LLServerFactory shareInstance].serverStorage[@(serverType)]) {
-        LLBaseServer<LLBaseServiceProtocol> *newServer = [self newServerWithType:serverType];
-        if (newServer) {
-            [[LLServerFactory shareInstance].serverStorage setObject:newServer forKey:@(serverType)];
-        }
-    }
-    return [LLServerFactory shareInstance].serverStorage[@(serverType)];
-}
-
-+ (LLBaseServer<LLBaseServiceProtocol> *)newServerWithType:(LLServerType)serverType {
     LLBaseServer<LLBaseServiceProtocol> *server = nil;
     switch (serverType) {
         case LLServerWX:
-            server = [[WXServer alloc] init];
+            server = [WXServer sharedInstance];
             break;
-            
+        case LLServerApple:
+            server = [AppleServer sharedInstance];
+            break;
+        case LLServerGreenCloud:
+            server = [GreenCloudServer sharedInstance];
+            break;
         default:
             break;
     }
     return server;
-}
-
-- (NSMutableDictionary *)serverStorage {
-    if (!_serverStorage) {
-        _serverStorage = [NSMutableDictionary dictionaryWithCapacity:0];
-    }
-    return _serverStorage;
 }
 
 @end

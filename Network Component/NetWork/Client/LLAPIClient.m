@@ -7,7 +7,7 @@
 //
 
 #import "LLAPIClient.h"
-
+#include <pthread.h>
 @interface LLAPIClient ()
 
 @property (nonatomic, strong)NSMutableDictionary *taskTable;
@@ -18,28 +18,35 @@
 
 @property (nonatomic, strong)NSMutableDictionary *taskQueueRequestID; //临时存放任务队列的request_id
 
-//@property (nonatomic, strong)NSMutableArray *retryTasksQueue;
+@property (nonatomic, strong)NSMutableArray *retryTasksQueue;
 
 @end
 
 @implementation LLAPIClient
-
+pthread_mutex_t mutex_lock;
 + (instancetype)shareClient {
     static LLAPIClient *client = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         client = [[LLAPIClient alloc] init];
-        
+        client.taskTable = [NSMutableDictionary dictionaryWithCapacity:0];
+        client.taskStartTime = [NSMutableDictionary dictionaryWithCapacity:0];
+        client.taskTryCount = [NSMutableDictionary dictionaryWithCapacity:0];
+        client.taskQueueRequestID = [NSMutableDictionary dictionaryWithCapacity:0];
+        [client __initMutex];
     });
     return client;
 }
+- (void)__initMutex
+{
+    pthread_mutexattr_t attr;
+    pthread_mutexattr_init(&attr);
+    pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_NORMAL);
+    pthread_mutex_init(&mutex_lock, &attr);
+    pthread_mutexattr_destroy(&attr);
+}
 
-
-- (NSNumber *)callRequestWithRequestModel:(LLBaseRequestModel *)requestModel {
-    
-//    if (requestModel.retryHandler && ![self.retryTasksQueue containsObject:requestModel]) {
-//        [self.retryTasksQueue addObject:requestModel];
-//    }
+- (NSString *)callRequestWithRequestModel:(LLBaseRequestModel *)requestModel {
     typeof(self) __weak weakSelf = self;
     __block NSURLSessionDataTask *task = [[NSURLSessionDataTask alloc] init];
      task = [LLRequestDispatch generateWithRequestDataModel:requestModel progress:^(NSProgress *progress) {
@@ -51,33 +58,31 @@
             requestModel.complete(resp);
         }
         
+        NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
         if ([resp[@"code"] integerValue] != Response_Success_Code) {
-            [weakSelf resendRequestModel:requestModel errorCode:[resp[@"code"] integerValue] requestId:[NSNumber numberWithUnsignedInteger:task.hash]];
+            [weakSelf resendRequestModel:requestModel errorCode:[resp[@"code"] integerValue] requestId:requestID];
         }
         
-        NSNumber *requestID = [NSNumber numberWithUnsignedInteger:task.hash];
+        pthread_mutex_lock(&mutex_lock);
         [weakSelf.taskTable removeObjectForKey:requestID];
+        pthread_mutex_unlock(&mutex_lock);
     }];
-    NSNumber *requestID = [NSNumber numberWithUnsignedInteger:task.hash];
+    
+    pthread_mutex_lock(&mutex_lock);
+    NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
     [self.taskTable setObject:task forKey:requestID];
     if (!self.taskStartTime[requestID]) {
         [self.taskStartTime setObject:@([[NSDate date] timeIntervalSince1970]) forKey:requestID];
     }
     [self.taskTryCount setObject:@([self.taskTryCount[requestID] integerValue]+1) forKey:requestID];
+    pthread_mutex_unlock(&mutex_lock);
     
     return requestID;
 }
 
 #pragma mark --- 任务依赖
-- (void)callRequestWithRequestModelQueue:(NSArray<LLBaseRequestModel *> *)requestModelQueue requestIDs:(void(^)(NSArray<NSNumber *> *ids))requestIDs {
-    
-//    [requestModelQueue enumerateObjectsUsingBlock:^(LLBaseRequestModel * _Nonnull requestModel, NSUInteger idx, BOOL * _Nonnull stop) {
-//        if (requestModel.retryHandler && ![self.retryTasksQueue containsObject:requestModel]) {
-//            [self.retryTasksQueue addObject:requestModel];
-//        }
-//    }];
-    
-    if ([requestModelQueue isKindOfClass:[NSMutableArray class]] && !self.taskQueueRequestID[@(requestModelQueue.hash)]) {
+- (void)callRequestWithRequestModelQueue:(NSArray<LLBaseRequestModel *> *)requestModelQueue requestIDs:(void(^)(NSArray<NSString *> *ids))requestIDs {
+    if ([requestModelQueue isKindOfClass:[NSMutableArray class]] && !self.taskQueueRequestID[[NSString stringWithFormat:@"%x", (unsigned int)requestModelQueue]]) {
         NSLog(@"### execute with a mutable modelQueue is not permitted");
         return;
     }
@@ -86,7 +91,7 @@
     NSArray<LLBaseRequestModel *> *execQueue = [self readyRequestModels:requestQueue];
     
     if (requestQueue != requestModelQueue) {///首次进入
-        [self.taskQueueRequestID setObject:[NSMutableArray arrayWithCapacity:0] forKey:@(requestQueue.hash)];
+        [self.taskQueueRequestID setObject:[NSMutableArray arrayWithCapacity:0] forKey:[NSString stringWithFormat:@"%x", (unsigned int)requestQueue]];
         
     }
     
@@ -103,64 +108,72 @@
                 obj.complete(resp);
             }
             
+            NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
             if ([resp[@"code"] integerValue] != Response_Success_Code) {
-                [weakSelf resendRequestModel:obj errorCode:[resp[@"code"] integerValue] requestId:[NSNumber numberWithUnsignedInteger:task.hash]];
+                [weakSelf resendRequestModel:obj errorCode:[resp[@"code"] integerValue] requestId:requestID];
             }
-            
-            NSNumber *requestID = [NSNumber numberWithUnsignedInteger:task.hash];
+            pthread_mutex_lock(&mutex_lock);
             [weakSelf.taskTable removeObjectForKey:requestID];
-            
             [requestQueue removeObject:obj];
+            pthread_mutex_unlock(&mutex_lock);
+            
             [self removeDenpency:requestQueue from:obj];
             [self callRequestWithRequestModelQueue:requestQueue requestIDs:requestIDs];
         }];
-        NSNumber *requestID = [NSNumber numberWithUnsignedInteger:task.hash];
+        pthread_mutex_lock(&mutex_lock);
+        NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
         [self.taskTable setObject:task forKey:requestID];
         [self.taskQueueRequestID[@(requestQueue.hash)] addObject:requestID];
         if (!self.taskStartTime[requestID]) {
             [self.taskStartTime setObject:@([[NSDate date] timeIntervalSince1970]) forKey:requestID];
         }
-        
+        pthread_mutex_unlock(&mutex_lock);
     }];
-    
+    pthread_mutex_lock(&mutex_lock);
     if (execQueue.count == 0) {
         if (requestIDs) {
             requestIDs(self.taskQueueRequestID[@(requestQueue.hash)]);
         }
         [self.taskQueueRequestID removeObjectForKey:@(requestQueue.hash)];
     }
+    pthread_mutex_unlock(&mutex_lock);
 }
 
 
 - (NSArray<LLBaseRequestModel *> *)readyRequestModels:(NSArray<LLBaseRequestModel *> *)requestModelQueue {
     __block NSMutableArray *readyQueue = [NSMutableArray arrayWithCapacity:0];
+    pthread_mutex_lock(&mutex_lock);
     [requestModelQueue enumerateObjectsUsingBlock:^(LLBaseRequestModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj.dependency.count == 0) {
             [readyQueue addObject:obj];
         }
     }];
-    
+    pthread_mutex_unlock(&mutex_lock);
     return readyQueue;
 }
 
-- (void)removeDenpency:(NSArray<LLBaseRequestModel *> *)requestModelQueue from:(LLBaseRequestModel *)dependency {
+- (void)removeDenpency:(NSArray<LLBaseRequestModel *> *)requestModelQueue from:(LLBaseRequestModel *)dependencyModel {
+    pthread_mutex_lock(&mutex_lock);
     [requestModelQueue enumerateObjectsUsingBlock:^(LLBaseRequestModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [obj.dependency enumerateObjectsUsingBlock:^(LLBaseRequestModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj == dependency) {
-                [obj.dependency removeObject:obj];
-            }
-        }];
+        NSMutableArray *dependencyList = [obj.dependency mutableCopy];
+        [dependencyList removeObject:dependencyModel];
+        obj.dependency = dependencyList.copy;
     }];
+    pthread_mutex_unlock(&mutex_lock);
 }
 
 #pragma mark --- 复制请求
-- (void)resendRequestModel:(LLBaseRequestModel *)requestModel errorCode:(NSInteger)code requestId:(NSNumber *)_id {
+- (void)resendRequestModel:(LLBaseRequestModel *)requestModel errorCode:(NSInteger)code requestId:(NSString *)_id {
     if (requestModel.retryHandler) {
         __block NSInteger tryCount = requestModel.retryHandler.maxRetryCount.integerValue;
         __block NSTimeInterval duration = requestModel.retryHandler.maxRetryDuration.doubleValue;
         __block NSTimeInterval retryInterval = requestModel.retryHandler.retryInterval.doubleValue;
+        pthread_mutex_lock(&mutex_lock);
+        double timeCost = [[NSDate date] timeIntervalSince1970] - [self.taskStartTime[_id] doubleValue];
+        NSInteger tryCountCost = [self.taskTryCount[_id] integerValue];
+        pthread_mutex_unlock(&mutex_lock);
         if (requestModel.retryHandler.maxRetryDuration) {
-            if (tryCount > 0 && duration > 0 && [[NSDate date] timeIntervalSince1970] - [self.taskStartTime[_id] doubleValue] < duration && [self.taskTryCount[_id] integerValue] < tryCount) {
+            if (tryCount > 0 && duration > 0 && timeCost < duration && tryCountCost < tryCount) {
                 if (requestModel.retryHandler.errorCode.integerValue == code) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [self callRequestWithRequestModel:requestModel];
@@ -175,8 +188,7 @@
                 }
             }
         }else {
-            if (tryCount > 0 && [self.taskTryCount[_id] integerValue] < tryCount) {
-
+            if (tryCount > 0 && tryCountCost < tryCount) {
                 if (requestModel.retryHandler.errorCode.integerValue == code) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         [self callRequestWithRequestModel:requestModel];
@@ -194,22 +206,21 @@
     }
 }
 
-- (void)callRetryRequestModel:(LLBaseRequestModel *)requestModel {
-    
-    
-}
 
-- (void)cancelRequestWithRequestID:(NSNumber *)requestID {
+- (void)cancelRequestWithRequestID:(NSString *)requestID {
+    pthread_mutex_lock(&mutex_lock);
     NSURLSessionDataTask *task = [self.taskTable objectForKey:requestID];
     [task cancel];
     [self.taskTable removeObjectForKey:requestID];
     [self.taskStartTime removeObjectForKey:requestID];
     [self.taskTryCount removeObjectForKey:requestID];
+    pthread_mutex_unlock(&mutex_lock);
 }
 
-- (void)cancelRequestWithRequestIDList:(NSArray<NSNumber *> *)requestIDList {
+- (void)cancelRequestWithRequestIDList:(NSArray<NSString *> *)requestIDList {
+    pthread_mutex_lock(&mutex_lock);
     typeof(self) __weak weakSelf = self;
-    [requestIDList enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [requestIDList enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSURLSessionDataTask *task = [weakSelf.taskTable objectForKey:obj];
         [task cancel];
         
@@ -217,42 +228,7 @@
     [self.taskTable removeObjectsForKeys:requestIDList];
     [self.taskTryCount removeObjectsForKeys:requestIDList];
     [self.taskStartTime removeObjectsForKeys:requestIDList];
+    pthread_mutex_unlock(&mutex_lock);
 }
-
-
-- (NSMutableDictionary *)taskTable {
-    if (!_taskTable) {
-        _taskTable = [NSMutableDictionary dictionaryWithCapacity:0];
-    }
-    return _taskTable;
-}
-
-- (NSMutableDictionary *)taskStartTime {
-    if (!_taskStartTime) {
-        _taskStartTime = [NSMutableDictionary dictionaryWithCapacity:0];
-    }
-    return _taskStartTime;
-}
-
-- (NSMutableDictionary *)taskTryCount {
-    if (!_taskTryCount) {
-        _taskTryCount = [NSMutableDictionary dictionaryWithCapacity:0];
-    }
-    return _taskTryCount;
-}
-
-- (NSMutableDictionary *)taskQueueRequestID {
-    if (!_taskQueueRequestID) {
-        _taskQueueRequestID = [NSMutableDictionary dictionaryWithCapacity:0];
-    }
-    return _taskQueueRequestID;
-}
-
-//- (NSMutableArray *)retryTasksQueue {
-//    if (!_retryTasksQueue) {
-//        _retryTasksQueue = [NSMutableArray arrayWithCapacity:0];
-//    }
-//    return _retryTasksQueue;
-//}
 
 @end

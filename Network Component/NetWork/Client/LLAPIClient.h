@@ -15,16 +15,16 @@
 + (instancetype)shareClient;
 
 //请求抽象为一个接口
-- (NSNumber *)callRequestWithRequestModel:(LLBaseRequestModel *)requestModel;
+- (NSString *)callRequestWithRequestModel:(LLBaseRequestModel *)requestModel;
 
-- (void)callRequestWithRequestModelQueue:(NSArray<LLBaseRequestModel *> *)requestModelQueue requestIDs:(void(^)(NSArray<NSNumber *> *ids))requestIDs;
+- (void)callRequestWithRequestModelQueue:(NSArray<LLBaseRequestModel *> *)requestModelQueue requestIDs:(void(^)(NSArray<NSString *> *ids))requestIDs;
 
 
 /**
  *  取消网络请求
  */
-- (void)cancelRequestWithRequestID:(NSNumber *)requestID;
+- (void)cancelRequestWithRequestID:(NSString *)requestID;
 
-- (void)cancelRequestWithRequestIDList:(NSArray<NSNumber *> *)requestIDList;
+- (void)cancelRequestWithRequestIDList:(NSArray<NSString *> *)requestIDList;
 
 @end

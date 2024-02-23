@@ -13,7 +13,7 @@
 /**
  *  开发、测试、预发、正式、自定, 五种环境的baseUrl在子类中实现，获取对应的URL赋值给apiBaseUrl，自定义在基类中进行保存获取
  */
-
+@property (nonatomic, class, readonly) id<LLBaseServiceProtocol> sharedInstance;
 @property (nonatomic, strong, readonly) NSString *developApiBaseUrl;
 @property (nonatomic, strong, readonly) NSString *testApiBaseUrl;
 @property (nonatomic, strong, readonly) NSString *prereleaseApiBaseUrl;

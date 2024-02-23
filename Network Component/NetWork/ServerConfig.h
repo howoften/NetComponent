@@ -34,7 +34,8 @@ typedef NS_ENUM(NSUInteger, EnvironmentType) {
 
 typedef NS_ENUM(NSUInteger, LLServerType) {
     LLServerWX,
-
+    LLServerApple,
+    LLServerGreenCloud
 };
 
 typedef NS_ENUM(NSUInteger, LLAPIRequestType) {
