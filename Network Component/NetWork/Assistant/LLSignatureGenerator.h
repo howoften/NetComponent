@@ -12,4 +12,5 @@
 
 + (NSString *)signParameter:(NSDictionary *)param signToken:(NSString *)signToken;
 
++ (NSString *)hmacSha256AndBase64:(NSString *)plainText encryptKey:(NSString *)key;
 @end

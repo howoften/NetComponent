@@ -49,7 +49,7 @@ pthread_mutex_t mutex_lock;
 - (NSString *)callRequestWithRequestModel:(LLBaseRequestModel *)requestModel {
     typeof(self) __weak weakSelf = self;
     __block NSURLSessionDataTask *task = [[NSURLSessionDataTask alloc] init];
-     task = [LLRequestDispatch generateWithRequestDataModel:requestModel progress:^(NSProgress *progress) {
+     task = [LLRequestDispatch generateTaskWithRequestDataModel:requestModel progress:^(NSProgress *progress) {
         if (requestModel.progress) {
             requestModel.progress(progress);
         }
@@ -59,7 +59,7 @@ pthread_mutex_t mutex_lock;
         }
         
         NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
-        if ([resp[@"code"] integerValue] != Response_Success_Code) {
+        if (Response_Success_Code([resp[@"code"] integerValue])) {
             [weakSelf resendRequestModel:requestModel errorCode:[resp[@"code"] integerValue] requestId:requestID];
         }
         
@@ -99,7 +99,7 @@ pthread_mutex_t mutex_lock;
 
         typeof(self) __weak weakSelf = self;
         __block NSURLSessionDataTask *task = [[NSURLSessionDataTask alloc] init];
-        task = [LLRequestDispatch generateWithRequestDataModel:obj progress:^(NSProgress *progress) {
+        task = [LLRequestDispatch generateTaskWithRequestDataModel:obj progress:^(NSProgress *progress) {
             if (obj.progress) {
                 obj.progress(progress);
             }
@@ -109,7 +109,7 @@ pthread_mutex_t mutex_lock;
             }
             
             NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
-            if ([resp[@"code"] integerValue] != Response_Success_Code) {
+            if (Response_Success_Code([resp[@"code"] integerValue])) {
                 [weakSelf resendRequestModel:obj errorCode:[resp[@"code"] integerValue] requestId:requestID];
             }
             pthread_mutex_lock(&mutex_lock);

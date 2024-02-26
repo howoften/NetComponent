@@ -5,10 +5,12 @@
 	<key>code</key>
 	<array>
 		<string>code</string>
+		<string>result</string>
 	</array>
 	<key>data</key>
 	<array>
 		<string>data</string>
+		<string>retVal</string>
 	</array>
 	<key>msg</key>
 	<array>

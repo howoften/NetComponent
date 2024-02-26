@@ -26,7 +26,7 @@
     return factory;
 }
 
-+ (EnvironmentType)environmentTypeOfServer:(LLServerType)serverType {
++ (LLEnvironmentType)environmentTypeOfServer:(LLServerType)serverType {
     return [self serverWithType:serverType].environmentType;
 }
 

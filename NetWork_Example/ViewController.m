@@ -48,7 +48,10 @@
         NSLog(@"先执行");
     };
      */
-    
+    [[LLAPIClient shareClient] callRequestWithRequestModel:self.greenCloudRequestModel];
+    self.greenCloudRequestModel.complete = ^(NSDictionary *response) {
+        
+    };
     
 }
 
@@ -105,9 +108,9 @@
         _greenCloudRequestModel.serverType = LLServerGreenCloud;
         _greenCloudRequestModel.requestPath = @"/guardian/open/crm/v2/queryAllIdCodeType";
         _greenCloudRequestModel.parameters = @{
-            @"id":@"1380561588"
+
         };
     }
-    return _dependcyRequestModel;
+    return _greenCloudRequestModel;
 }
 @end

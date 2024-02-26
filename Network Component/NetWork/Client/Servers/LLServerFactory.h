@@ -12,7 +12,7 @@
 
 @interface LLServerFactory : NSObject
 
-+ (EnvironmentType)environmentTypeOfServer:(LLServerType)serverType;
++ (LLEnvironmentType)environmentTypeOfServer:(LLServerType)serverType;
 
 + (LLBaseServer<LLBaseServiceProtocol> *)serverWithType:(LLServerType)serverType;
 

@@ -11,6 +11,6 @@
 
 @interface LLRequestDispatch : NSObject
 
-+ (NSURLSessionDataTask *)generateWithRequestDataModel:(LLBaseRequestModel * _Nonnull)requestModel progress:(void(^)(NSProgress *))progress complete:(void(^)(NSDictionary *resp))complete;
++ (NSURLSessionDataTask *_Nullable)generateTaskWithRequestDataModel:(LLBaseRequestModel * _Nonnull)requestModel progress:(void(^_Nullable)(NSProgress *_Nullable))progress complete:(void(^_Nullable)(NSDictionary * _Nullable resp))complete;
 
 @end

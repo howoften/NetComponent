@@ -19,7 +19,6 @@
 		2DFE42FC2B877D7400D6C702 /* LLResponseFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */; };
 		2DFE42FD2B877D7400D6C702 /* NSString+NetResponseVerify.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */; };
 		2DFE42FE2B877D7400D6C702 /* LLSignatureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */; };
-		2DFE42FF2B877D7400D6C702 /* LLCommonParamsGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C22B877D7400D6C702 /* LLCommonParamsGenerator.m */; };
 		2DFE43002B877D7400D6C702 /* LLRequestRetryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C32B877D7400D6C702 /* LLRequestRetryHandler.m */; };
 		2DFE43012B877D7400D6C702 /* LLRequestDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C62B877D7400D6C702 /* LLRequestDispatch.m */; };
 		2DFE43022B877D7400D6C702 /* LLAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C82B877D7400D6C702 /* LLAppContext.m */; };
@@ -72,7 +71,6 @@
 		2DFE42BF2B877D7400D6C702 /* LLAppContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLAppContext.h; sourceTree = "<group>"; };
 		2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLSignatureGenerator.m; sourceTree = "<group>"; };
 		2DFE42C12B877D7400D6C702 /* LLBaseRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBaseRequestModel.h; sourceTree = "<group>"; };
-		2DFE42C22B877D7400D6C702 /* LLCommonParamsGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLCommonParamsGenerator.m; sourceTree = "<group>"; };
 		2DFE42C32B877D7400D6C702 /* LLRequestRetryHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLRequestRetryHandler.m; sourceTree = "<group>"; };
 		2DFE42C42B877D7400D6C702 /* NSString+NetResponseVerify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+NetResponseVerify.h"; sourceTree = "<group>"; };
 		2DFE42C52B877D7400D6C702 /* LLResponseFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLResponseFormatter.h; sourceTree = "<group>"; };
@@ -80,7 +78,6 @@
 		2DFE42C72B877D7400D6C702 /* LLSignatureGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLSignatureGenerator.h; sourceTree = "<group>"; };
 		2DFE42C82B877D7400D6C702 /* LLAppContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLAppContext.m; sourceTree = "<group>"; };
 		2DFE42C92B877D7400D6C702 /* LLBaseRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBaseRequestModel.m; sourceTree = "<group>"; };
-		2DFE42CA2B877D7400D6C702 /* LLCommonParamsGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLCommonParamsGenerator.h; sourceTree = "<group>"; };
 		2DFE42CB2B877D7400D6C702 /* ServerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
 		2DFE42CC2B877D7400D6C702 /* responseFormat.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = responseFormat.plist; sourceTree = "<group>"; };
 		2DFE42CE2B877D7400D6C702 /* HttpLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpLog.h; sourceTree = "<group>"; };
@@ -190,6 +187,21 @@
 			path = router;
 			sourceTree = "<group>";
 		};
+		2D93E4332B8C1E2800BDFCD3 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				2DFE42C12B877D7400D6C702 /* LLBaseRequestModel.h */,
+				2DFE42C92B877D7400D6C702 /* LLBaseRequestModel.m */,
+				2DFE42BE2B877D7400D6C702 /* LLRequestDispatch.h */,
+				2DFE42C62B877D7400D6C702 /* LLRequestDispatch.m */,
+				2DFE42C52B877D7400D6C702 /* LLResponseFormatter.h */,
+				2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */,
+				2DFE42BD2B877D7400D6C702 /* LLRequestRetryHandler.h */,
+				2DFE42C32B877D7400D6C702 /* LLRequestRetryHandler.m */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		2DD4C96B2B88A351002D09E8 /* GreeenCloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,22 +236,12 @@
 			isa = PBXGroup;
 			children = (
 				2DFE43192B877E5F00D6C702 /* VirtualMacAdress */,
-				2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */,
 				2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */,
-				2DFE42BD2B877D7400D6C702 /* LLRequestRetryHandler.h */,
-				2DFE42BE2B877D7400D6C702 /* LLRequestDispatch.h */,
 				2DFE42BF2B877D7400D6C702 /* LLAppContext.h */,
-				2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */,
-				2DFE42C12B877D7400D6C702 /* LLBaseRequestModel.h */,
-				2DFE42C22B877D7400D6C702 /* LLCommonParamsGenerator.m */,
-				2DFE42C32B877D7400D6C702 /* LLRequestRetryHandler.m */,
-				2DFE42C42B877D7400D6C702 /* NSString+NetResponseVerify.h */,
-				2DFE42C52B877D7400D6C702 /* LLResponseFormatter.h */,
-				2DFE42C62B877D7400D6C702 /* LLRequestDispatch.m */,
-				2DFE42C72B877D7400D6C702 /* LLSignatureGenerator.h */,
 				2DFE42C82B877D7400D6C702 /* LLAppContext.m */,
-				2DFE42C92B877D7400D6C702 /* LLBaseRequestModel.m */,
-				2DFE42CA2B877D7400D6C702 /* LLCommonParamsGenerator.h */,
+				2DFE42C72B877D7400D6C702 /* LLSignatureGenerator.h */,
+				2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */,
+				2DFE42C42B877D7400D6C702 /* NSString+NetResponseVerify.h */,
 			);
 			path = Assistant;
 			sourceTree = "<group>";
@@ -261,6 +263,7 @@
 			children = (
 				2DFE42DD2B877D7400D6C702 /* LLAPIClient.h */,
 				2DFE42D42B877D7400D6C702 /* LLAPIClient.m */,
+				2D93E4332B8C1E2800BDFCD3 /* Request */,
 				2DFE42D52B877D7400D6C702 /* Servers */,
 			);
 			path = Client;
@@ -507,7 +510,6 @@
 				2DFE431F2B877E5F00D6C702 /* NSString+LLUUID.m in Sources */,
 				2DFE43022B877D7400D6C702 /* LLAppContext.m in Sources */,
 				2DFE430F2B877D7500D6C702 /* LocalConnection.m in Sources */,
-				2DFE42FF2B877D7400D6C702 /* LLCommonParamsGenerator.m in Sources */,
 				2DFE43012B877D7400D6C702 /* LLRequestDispatch.m in Sources */,
 				2D18DE4C23559FCD001A5D95 /* LLRouterController.m in Sources */,
 				2DFE43182B877D7500D6C702 /* RealReachability.m in Sources */,

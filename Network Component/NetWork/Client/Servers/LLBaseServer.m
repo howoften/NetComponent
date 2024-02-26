@@ -11,8 +11,8 @@
 @interface LLBaseServer ()
 @property (nonatomic, strong)id<LLBaseServiceProtocol> server;
 
-@property (nonatomic, assign)EnvironmentType environmentType;
-
+@property (nonatomic, assign)LLEnvironmentType environmentType;
+@property (nonatomic, strong)HttpTool *httpTool;
 
 @property (nonatomic, strong)NSString *customApiHost;
 
@@ -27,19 +27,20 @@
     if (self) {
         if ([self conformsToProtocol:@protocol(LLBaseServiceProtocol)]) {
             self.server = (id<LLBaseServiceProtocol>)self;
-#ifdef WX_BUILD_FOR_RELEASE
-            self.environmentType = EnvironmentTypeRelease;
+            self.httpTool = [[HttpTool alloc] init];
+#ifdef LLSERVER_ENV_RELEASE
+            self.environmentType = LLEnvironmentTypeRelease;
 #else
             NSNumber *environmentType = [[NSUserDefaults standardUserDefaults] objectForKey:@"environmentType"];
             if (environmentType) {
                 self.environmentType = [environmentType integerValue];
             }else {
-#ifdef WX_BUILD_FOR_DEV
-                self.environmentType = EnvironmentTypeDevelop;
-#elif defined WX_BUILD_FOR_TEST
-                self.environmentType = EnvironmentTypeTest;
-#elif defined WX_BUILD_FOR_PRERELEASE
-                self.environmentType = EnvironmentTypePreRelease;
+#ifdef LLSERVER_ENV_DEV
+                self.environmentType = LLEnvironmentTypeDevelop;
+#elif defined LLSERVER_ENV_TEST
+                self.environmentType = LLEnvironmentTypeTest;
+#elif defined LLSERVER_ENV_PRERELEASE
+                self.environmentType = LLEnvironmentTypePreRelease;
 #endif
             }
 #endif
@@ -51,7 +52,7 @@
     return self;
 }
 
-- (void)setEnvironmentType:(EnvironmentType)environmentType {
+- (void)setLLEnvironmentType:(LLEnvironmentType)environmentType {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:environmentType] forKey:@"environmentType"];
     _environmentType = environmentType;
     _hostAddress = nil;
@@ -60,19 +61,19 @@
 - (NSString *)hostAddress {
     if (!_hostAddress) {
         switch (self.environmentType) {
-            case EnvironmentTypeDevelop:
+            case LLEnvironmentTypeDevelop:
                 _hostAddress = self.server.developApiBaseUrl;
                 break;
-            case EnvironmentTypeTest:
+            case LLEnvironmentTypeTest:
                 _hostAddress = self.server.testApiBaseUrl;
                 break;
-            case EnvironmentTypePreRelease:
+            case LLEnvironmentTypePreRelease:
                 _hostAddress = self.server.prereleaseApiBaseUrl;
                 break;
-            case EnvironmentTypeRelease:
+            case LLEnvironmentTypeRelease:
                 _hostAddress = self.server.releaseApiBaseUrl;
                 break;
-            case EnvironmentTypeCustom:
+            case LLEnvironmentTypeCustom:
                 _hostAddress = self.server.customApiBaseUrl;
                 break;
             default:
@@ -87,6 +88,13 @@
         _customApiHost = [[NSUserDefaults standardUserDefaults] objectForKey:NSStringFromClass([self class])];
     }
     return _customApiHost;
+}
+
+- (NSDictionary *)commonRequestHeaderParametersFor:(LLBaseRequestModel *)requestEntity {
+    return nil;
+}
+- (NSDictionary *)commonRequestParametersFor:(LLBaseRequestModel *)requestEntity {
+    return nil;
 }
 
 @end

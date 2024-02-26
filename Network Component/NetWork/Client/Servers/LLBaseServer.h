@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HttpTool.h"
 #import "ServerConfig.h"
+#import "LLBaseRequestModel.h"
 
 @protocol LLBaseServiceProtocol <NSObject>
 /**
@@ -20,12 +22,18 @@
 @property (nonatomic, strong, readonly) NSString *releaseApiBaseUrl;
 @property (nonatomic, strong, readonly) NSString *customApiBaseUrl;
 
+
+- (NSDictionary *)commonRequestHeaderParametersFor:(LLBaseRequestModel *)requestEntity;
+- (NSDictionary *)commonRequestParametersFor:(LLBaseRequestModel *)requestEntity;
+
+
 @end
 
 @interface LLBaseServer : NSObject
 
-@property (nonatomic, assign, readonly)EnvironmentType environmentType;
+@property (nonatomic, assign, readonly)LLEnvironmentType environmentType;
 
+@property (nonatomic, strong, readonly)HttpTool *httpTool;
 @property (nonatomic, strong, readonly)NSString *privateKey;
 @property (nonatomic, strong, readonly)NSString *publicKey;
 @property (nonatomic, strong, readonly)NSString *hostAddress;

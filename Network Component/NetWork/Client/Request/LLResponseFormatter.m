@@ -7,7 +7,7 @@
 //
 
 #import "LLResponseFormatter.h"
-
+#import "ServerConfig.h"
 #define Cannot_Serialize_Response_Code @(-5000)
 #define Parse_Response_Faile @(-5001)
 #define Unpresent_Response_Code @(-4004)
@@ -61,7 +61,7 @@
              @"code":@(error.code),
              @"msg":error.localizedDescription,
              @"data":@{},
-             @"uiMsg":[self explainErrorType:error.code],
+             @"uiMsg":[self explainErrorType:@(error.code)],
              };
 }
 
@@ -71,10 +71,13 @@
     __block NSNumber *code = Unpresent_Response_Code;
     [codeSet enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *key = [NSString stringWithFormat:@"%@", obj];
-        if (response[key] && ![response[key] isKindOfClass:[NSNull class]]) {
+        if (!response[key]) { return; }
+        if ([response[key] respondsToSelector:@selector(integerValue)]) {
             code = [NSNumber numberWithInteger:[response[key] integerValue]];
             *stop = YES;
         }
+        code = response[key];
+        *stop = YES;
     }];
     
     if ([code isEqualToNumber:Unpresent_Response_Code]) {
@@ -85,20 +88,14 @@
     __block NSDictionary *data = response;
     [dataSet enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *key = [NSString stringWithFormat:@"%@", obj];
-        if (response[key]) {
-            if ([response[key] isKindOfClass:[NSDictionary class]]) {
-                data = response[key];
-            }else {
-                data = @{@"content":response[key]};
-            }
-            *stop = YES;
-        }
+        if (!response[key]) { return; }
+        data = response[key];
+        *stop = YES;
+        
     }];
     
     if (data == response) {
         _msg = [_msg stringByAppendingString:@" 'data',"];
-    }else if (data[@"content"] && data.allKeys.count == 1) {
-         _msg = [_msg stringByAppendingString:@" 'data',"];
     }
     
     
@@ -106,10 +103,9 @@
     __block NSString *msg;
     [msgSet enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *key = [NSString stringWithFormat:@"%@", obj];
-        if (response[key] && ![response[key] isKindOfClass:[NSNull class]]) {
-            msg = [NSString stringWithFormat:@"%@", response[key]];
-            *stop = YES;
-        }
+        if (!response[key]) { return; }
+        msg = [NSString stringWithFormat:@"%@", response[key]];
+        *stop = YES;
     }];
     
     if (msg.length < 1) {
@@ -132,7 +128,7 @@
         return dic;
     }
     NSMutableDictionary *mutableDic = [dic mutableCopy];
-    [mutableDic addEntriesFromDictionary:@{@"uiMsg":[self explainErrorType:[dic[@"code"] integerValue]]}];
+    [mutableDic addEntriesFromDictionary:@{@"uiMsg":[self explainErrorType:dic[@"code"]]}];
     
     return [mutableDic copy];
 }
@@ -146,9 +142,16 @@
              };
 }
 
-- (NSString *)explainErrorType:(NSInteger)code {
+- (NSString *)explainErrorType:(id)code {
+    if (![code respondsToSelector:@selector(integerValue)]) return @"未知错误";
+    NSInteger codeInteger = [code integerValue];
+    if ([code isKindOfClass:NSString.class] && codeInteger == 0) {
+        if ([code length] > 1 || [code length] < 1) return @"未知错误";
+        if (![code isEqualToString:@"0"]) return @"未知错误";
+    }
+    if (Response_Success_Code(codeInteger)) return @"成功";
     NSString *explain = nil;
-    switch (code) {
+    switch (codeInteger) {
         case NSURLErrorUnknown:
             explain = @"未知错误, 请稍后再试";
             break;

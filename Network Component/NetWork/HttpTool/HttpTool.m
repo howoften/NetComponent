@@ -60,8 +60,8 @@
     }
 }
 
-+ (void)refreshHTTPRequestHeader:(NSDictionary<NSString *, NSString *> *)header {
-    [[HttpTool shareManager] refreshRequestHeader:header];
+- (void)refreshHTTPRequestHeader:(NSDictionary<NSString *, NSString *> *)header {
+    [self refreshRequestHeader:header];
 }
 
 - (void)refreshRequestHeader:(NSDictionary *)dic {
@@ -70,9 +70,9 @@
     }];
 }
 
-+ (NSURLSessionDataTask *)getWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
-    __block HttpLog *log = [[self shareManager] bornHttpLog:@"GET" urlString:urlString param:parameters];
-    return [[self shareManager].afManager GET:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+- (NSURLSessionDataTask *)getWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"GET" urlString:urlString param:parameters];
+    return [self.afManager GET:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
             progress(uploadProgress);
         }
@@ -83,25 +83,25 @@
             if (failure) {
                 failure(serialError);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialError];
+            [self logHttpRequestContext:log resopnse:serialError];
         }else {
             if (success) {
                 success(serialObject);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialObject];
+            [self logHttpRequestContext:log resopnse:serialObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
         }
-        [[self shareManager] logHttpRequestContext:log resopnse:error];
+        [self logHttpRequestContext:log resopnse:error];
         
     }];
 }
 
-+ (NSURLSessionDataTask *)postWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
-    __block HttpLog *log = [[self shareManager] bornHttpLog:@"POST-Application/json" urlString:urlString param:parameters];
-    return [[self shareManager].afManager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+- (NSURLSessionDataTask *)postWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"POST-Application/json" urlString:urlString param:parameters];
+    return [self.afManager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
             progress(uploadProgress);
         }
@@ -112,25 +112,25 @@
             if (failure) {
                 failure(serialError);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialError];
+            [self logHttpRequestContext:log resopnse:serialError];
         }else {
             if (success) {
                 success(serialObject);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialObject];
+            [self logHttpRequestContext:log resopnse:serialObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
         }
-        [[self shareManager] logHttpRequestContext:log resopnse:error];
+        [self logHttpRequestContext:log resopnse:error];
     }];
 
 }
 
-+ (NSURLSessionDataTask *)postFormDataWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
-    __block HttpLog *log = [[self shareManager] bornHttpLog:@"POST-Form/data" urlString:urlString param:parameters];
-    return [[self shareManager].afManager POST:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+- (NSURLSessionDataTask *)postFormDataWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"POST-Form/data" urlString:urlString param:parameters];
+    return [self.afManager POST:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [parameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
             if ([obj isKindOfClass:[NSString class]] && ![key isEqualToString:@"dataName"] && ![key isEqualToString:@"fileName"] && ![key isEqualToString:@"mimeType"] && ![key isEqualToString:@"filePath"]) {
                 [formData appendPartWithFormData:[obj dataUsingEncoding:NSUTF8StringEncoding] name:key];
@@ -187,73 +187,73 @@
             if (failure) {
                 failure(serialError);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialError];
+            [self logHttpRequestContext:log resopnse:serialError];
         }else {
             if (success) {
                 success(serialObject);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialObject];
+            [self logHttpRequestContext:log resopnse:serialObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
         }
-        [[self shareManager] logHttpRequestContext:log resopnse:error];
+        [self logHttpRequestContext:log resopnse:error];
     }];
 }
 
-+ (NSURLSessionDataTask *)putWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
-    __block HttpLog *log = [[self shareManager] bornHttpLog:@"PUT" urlString:urlString param:parameters];
-    return [[self shareManager].afManager PUT:urlString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+- (NSURLSessionDataTask *)putWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"PUT" urlString:urlString param:parameters];
+    return [self.afManager PUT:urlString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *serialError = nil;
         id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
         if (serialError) {
             if (failure) {
                 failure(serialError);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialError];
+            [self logHttpRequestContext:log resopnse:serialError];
         }else {
             if (success) {
                 success(serialObject);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialObject];
+            [self logHttpRequestContext:log resopnse:serialObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
         }
-        [[self shareManager] logHttpRequestContext:log resopnse:error];
+        [self logHttpRequestContext:log resopnse:error];
     }];
 }
 
-+ (NSURLSessionDataTask *)deleteWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
-    __block HttpLog *log = [[self shareManager] bornHttpLog:@"DELETE" urlString:urlString param:parameters];
-    return [[self shareManager].afManager DELETE:urlString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+- (NSURLSessionDataTask *)deleteWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"DELETE" urlString:urlString param:parameters];
+    return [self.afManager DELETE:urlString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *serialError = nil;
         id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
         if (serialError) {
             if (failure) {
                 failure(serialError);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialError];
+            [self logHttpRequestContext:log resopnse:serialError];
         }else {
             if (success) {
                 success(serialObject);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:serialObject];
+            [self logHttpRequestContext:log resopnse:serialObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
             failure(error);
         }
-        [[self shareManager] logHttpRequestContext:log resopnse:error];
+        [self logHttpRequestContext:log resopnse:error];
     }];
 }
 
-+ (NSURLSessionDataTask *)uploadWithURLString:(NSString *)urlString data:(NSData *)data progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
-    __block HttpLog *log = [[self shareManager] bornHttpLog:@"UPLOAD" urlString:urlString param:data];
+- (NSURLSessionDataTask *)uploadWithURLString:(NSString *)urlString data:(NSData *)data progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"UPLOAD" urlString:urlString param:data];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    return [[self shareManager].afManager uploadTaskWithRequest:request fromData:data progress:^(NSProgress * _Nonnull uploadProgress) {
+    return [self.afManager uploadTaskWithRequest:request fromData:data progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
             progress(uploadProgress);
         }
@@ -262,12 +262,12 @@
             if (failure) {
                 failure(error);
             }
-            [[self shareManager] logHttpRequestContext:log resopnse:error];
+            [self logHttpRequestContext:log resopnse:error];
         }else {
             if (success) {
                 success(responseObject);
             }
-             [[self shareManager] logHttpRequestContext:log resopnse:responseObject];
+             [self logHttpRequestContext:log resopnse:responseObject];
         }
     }];
 }
@@ -301,7 +301,7 @@
         log.responseTime = [self.formatter stringFromDate:[NSDate date]];
         log.response = [NSString stringWithFormat:@"%@", response];
         
-        NSString *httpToolLog = [@"[HttpTool:RequestTrace]\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" stringByAppendingFormat:@"%@", log];
+        NSString *httpToolLog = [@"\n[HttpTool:RequestTrace]\n>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" stringByAppendingFormat:@"%@", log];
         NSLog(@"%@\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", httpToolLog);
         
         [self.halfwayLogs removeObject:log];
@@ -312,7 +312,7 @@
 - (NSDateFormatter *)formatter {
     if (!_formatter) {
         _formatter = [[NSDateFormatter alloc] init];
-        [_formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss:SSS"];
+        [_formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
     }
     return _formatter;
 }
