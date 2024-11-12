@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,38 +15,39 @@
 		2D18DDC823559CC7001A5D95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D18DDC623559CC7001A5D95 /* LaunchScreen.storyboard */; };
 		2D18DDCB23559CC7001A5D95 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18DDCA23559CC7001A5D95 /* main.m */; };
 		2D18DE4C23559FCD001A5D95 /* LLRouterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D18DE4B23559FCD001A5D95 /* LLRouterController.m */; };
-		2DD4C96E2B88A351002D09E8 /* GreenCloudServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD4C96D2B88A351002D09E8 /* GreenCloudServer.m */; };
-		2DFE42FC2B877D7400D6C702 /* LLResponseFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */; };
-		2DFE42FD2B877D7400D6C702 /* NSString+NetResponseVerify.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */; };
-		2DFE42FE2B877D7400D6C702 /* LLSignatureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */; };
-		2DFE43002B877D7400D6C702 /* LLRequestRetryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C32B877D7400D6C702 /* LLRequestRetryHandler.m */; };
-		2DFE43012B877D7400D6C702 /* LLRequestDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C62B877D7400D6C702 /* LLRequestDispatch.m */; };
-		2DFE43022B877D7400D6C702 /* LLAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C82B877D7400D6C702 /* LLAppContext.m */; };
-		2DFE43032B877D7400D6C702 /* LLBaseRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42C92B877D7400D6C702 /* LLBaseRequestModel.m */; };
-		2DFE43042B877D7400D6C702 /* responseFormat.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2DFE42CC2B877D7400D6C702 /* responseFormat.plist */; };
-		2DFE43052B877D7400D6C702 /* HttpRequestTrace.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2DFE42D02B877D7400D6C702 /* HttpRequestTrace.plist */; };
-		2DFE43062B877D7400D6C702 /* HttpLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42D12B877D7400D6C702 /* HttpLog.m */; };
-		2DFE43072B877D7400D6C702 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42D22B877D7400D6C702 /* HttpTool.m */; };
-		2DFE43082B877D7400D6C702 /* LLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42D42B877D7400D6C702 /* LLAPIClient.m */; };
-		2DFE43092B877D7400D6C702 /* WXServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42D92B877D7400D6C702 /* WXServer.m */; };
-		2DFE430A2B877D7400D6C702 /* LLBaseServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42DB2B877D7400D6C702 /* LLBaseServer.m */; };
-		2DFE430B2B877D7400D6C702 /* LLServerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42DC2B877D7400D6C702 /* LLServerFactory.m */; };
-		2DFE430C2B877D7400D6C702 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2DFE42E32B877D7400D6C702 /* README.md */; };
-		2DFE430D2B877D7500D6C702 /* PingFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42E42B877D7400D6C702 /* PingFoundation.m */; };
-		2DFE430E2B877D7500D6C702 /* PingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42E52B877D7400D6C702 /* PingHelper.m */; };
-		2DFE430F2B877D7500D6C702 /* LocalConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42E82B877D7400D6C702 /* LocalConnection.m */; };
-		2DFE43102B877D7500D6C702 /* ReachState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F12B877D7400D6C702 /* ReachState.m */; };
-		2DFE43112B877D7500D6C702 /* ReachStateUnloaded.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F32B877D7400D6C702 /* ReachStateUnloaded.m */; };
-		2DFE43122B877D7500D6C702 /* ReachStateUnReachable.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F42B877D7400D6C702 /* ReachStateUnReachable.m */; };
-		2DFE43132B877D7500D6C702 /* ReachStateWWAN.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F52B877D7400D6C702 /* ReachStateWWAN.m */; };
-		2DFE43142B877D7500D6C702 /* ReachStateLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F72B877D7400D6C702 /* ReachStateLoading.m */; };
-		2DFE43152B877D7500D6C702 /* FSMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F82B877D7400D6C702 /* FSMEngine.m */; };
-		2DFE43162B877D7500D6C702 /* FSMStateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42F92B877D7400D6C702 /* FSMStateUtil.m */; };
-		2DFE43172B877D7500D6C702 /* ReachStateWIFI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42FA2B877D7400D6C702 /* ReachStateWIFI.m */; };
-		2DFE43182B877D7500D6C702 /* RealReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE42FB2B877D7400D6C702 /* RealReachability.m */; };
-		2DFE431E2B877E5F00D6C702 /* LLKeyChainSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE431C2B877E5F00D6C702 /* LLKeyChainSaver.m */; };
-		2DFE431F2B877E5F00D6C702 /* NSString+LLUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE431D2B877E5F00D6C702 /* NSString+LLUUID.m */; };
-		2DFE43232B877FB000D6C702 /* AppleServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DFE43222B877FB000D6C702 /* AppleServer.m */; };
+		2D5CC9702CE3016B008FE889 /* LocalConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC92A2CE3016B008FE889 /* LocalConnection.m */; };
+		2D5CC9712CE3016B008FE889 /* FSMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC92E2CE3016B008FE889 /* FSMEngine.m */; };
+		2D5CC9722CE3016B008FE889 /* FSMStateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9302CE3016B008FE889 /* FSMStateUtil.m */; };
+		2D5CC9732CE3016B008FE889 /* ReachState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9322CE3016B008FE889 /* ReachState.m */; };
+		2D5CC9742CE3016B008FE889 /* ReachStateLoading.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9342CE3016B008FE889 /* ReachStateLoading.m */; };
+		2D5CC9752CE3016B008FE889 /* ReachStateUnloaded.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9362CE3016B008FE889 /* ReachStateUnloaded.m */; };
+		2D5CC9762CE3016B008FE889 /* ReachStateUnReachable.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9382CE3016B008FE889 /* ReachStateUnReachable.m */; };
+		2D5CC9772CE3016B008FE889 /* ReachStateWIFI.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC93A2CE3016B008FE889 /* ReachStateWIFI.m */; };
+		2D5CC9782CE3016B008FE889 /* ReachStateWWAN.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC93C2CE3016B008FE889 /* ReachStateWWAN.m */; };
+		2D5CC9792CE3016B008FE889 /* PingFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC93F2CE3016B008FE889 /* PingFoundation.m */; };
+		2D5CC97A2CE3016B008FE889 /* PingHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9412CE3016B008FE889 /* PingHelper.m */; };
+		2D5CC97B2CE3016B008FE889 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2D5CC9422CE3016B008FE889 /* README.md */; };
+		2D5CC97C2CE3016B008FE889 /* RealReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9452CE3016B008FE889 /* RealReachability.m */; };
+		2D5CC97F2CE3016B008FE889 /* LLBaseRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC94E2CE3016B008FE889 /* LLBaseRequestModel.m */; };
+		2D5CC9802CE3016B008FE889 /* LLRequestDispatch.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9502CE3016B008FE889 /* LLRequestDispatch.m */; };
+		2D5CC9812CE3016B008FE889 /* LLRequestRetryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9522CE3016B008FE889 /* LLRequestRetryHandler.m */; };
+		2D5CC9822CE3016B008FE889 /* LLResponseFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9542CE3016B008FE889 /* LLResponseFormatter.m */; };
+		2D5CC9832CE3016B008FE889 /* AppleServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9572CE3016B008FE889 /* AppleServer.m */; };
+		2D5CC9842CE3016B008FE889 /* GreenCloudServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC95A2CE3016B008FE889 /* GreenCloudServer.m */; };
+		2D5CC9852CE3016B008FE889 /* WXServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC95D2CE3016B008FE889 /* WXServer.m */; };
+		2D5CC9862CE3016B008FE889 /* LLBaseServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9602CE3016B008FE889 /* LLBaseServer.m */; };
+		2D5CC9872CE3016B008FE889 /* LLServerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9622CE3016B008FE889 /* LLServerFactory.m */; };
+		2D5CC9882CE3016B008FE889 /* LLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9652CE3016B008FE889 /* LLAPIClient.m */; };
+		2D5CC9892CE3016B008FE889 /* HttpLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9682CE3016B008FE889 /* HttpLog.m */; };
+		2D5CC98A2CE3016B008FE889 /* HttpRequestTrace.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D5CC9692CE3016B008FE889 /* HttpRequestTrace.plist */; };
+		2D5CC98B2CE3016B008FE889 /* HttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC96B2CE3016B008FE889 /* HttpTool.m */; };
+		2D5CC98C2CE3016B008FE889 /* responseFormat.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2D5CC96D2CE3016B008FE889 /* responseFormat.plist */; };
+		2D5CC99B2CE30316008FE889 /* NSString+NetResponseVerify.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC98E2CE30316008FE889 /* NSString+NetResponseVerify.m */; };
+		2D5CC99C2CE30316008FE889 /* LLSignatureGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9912CE30316008FE889 /* LLSignatureGenerator.m */; };
+		2D5CC99D2CE30316008FE889 /* LLKeyChainSaver.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9942CE30316008FE889 /* LLKeyChainSaver.m */; };
+		2D5CC99E2CE30316008FE889 /* NSString+LLUUID.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9962CE30316008FE889 /* NSString+LLUUID.m */; };
+		2D5CC99F2CE30316008FE889 /* LLAppContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9992CE30316008FE889 /* LLAppContext.m */; };
+		2D5CC9A32CE303FB008FE889 /* GreenTreeServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5CC9A12CE303FB008FE889 /* GreenTreeServer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,69 +63,71 @@
 		2D18DDCA23559CC7001A5D95 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2D18DE4A23559FCD001A5D95 /* LLRouterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLRouterController.h; sourceTree = "<group>"; };
 		2D18DE4B23559FCD001A5D95 /* LLRouterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLRouterController.m; sourceTree = "<group>"; };
-		2DD4C96C2B88A351002D09E8 /* GreenCloudServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenCloudServer.h; sourceTree = "<group>"; };
-		2DD4C96D2B88A351002D09E8 /* GreenCloudServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GreenCloudServer.m; sourceTree = "<group>"; };
-		2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLResponseFormatter.m; sourceTree = "<group>"; };
-		2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+NetResponseVerify.m"; sourceTree = "<group>"; };
-		2DFE42BD2B877D7400D6C702 /* LLRequestRetryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLRequestRetryHandler.h; sourceTree = "<group>"; };
-		2DFE42BE2B877D7400D6C702 /* LLRequestDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLRequestDispatch.h; sourceTree = "<group>"; };
-		2DFE42BF2B877D7400D6C702 /* LLAppContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLAppContext.h; sourceTree = "<group>"; };
-		2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLSignatureGenerator.m; sourceTree = "<group>"; };
-		2DFE42C12B877D7400D6C702 /* LLBaseRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBaseRequestModel.h; sourceTree = "<group>"; };
-		2DFE42C32B877D7400D6C702 /* LLRequestRetryHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLRequestRetryHandler.m; sourceTree = "<group>"; };
-		2DFE42C42B877D7400D6C702 /* NSString+NetResponseVerify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+NetResponseVerify.h"; sourceTree = "<group>"; };
-		2DFE42C52B877D7400D6C702 /* LLResponseFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLResponseFormatter.h; sourceTree = "<group>"; };
-		2DFE42C62B877D7400D6C702 /* LLRequestDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLRequestDispatch.m; sourceTree = "<group>"; };
-		2DFE42C72B877D7400D6C702 /* LLSignatureGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLSignatureGenerator.h; sourceTree = "<group>"; };
-		2DFE42C82B877D7400D6C702 /* LLAppContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLAppContext.m; sourceTree = "<group>"; };
-		2DFE42C92B877D7400D6C702 /* LLBaseRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBaseRequestModel.m; sourceTree = "<group>"; };
-		2DFE42CB2B877D7400D6C702 /* ServerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
-		2DFE42CC2B877D7400D6C702 /* responseFormat.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = responseFormat.plist; sourceTree = "<group>"; };
-		2DFE42CE2B877D7400D6C702 /* HttpLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpLog.h; sourceTree = "<group>"; };
-		2DFE42CF2B877D7400D6C702 /* HttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpTool.h; sourceTree = "<group>"; };
-		2DFE42D02B877D7400D6C702 /* HttpRequestTrace.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HttpRequestTrace.plist; sourceTree = "<group>"; };
-		2DFE42D12B877D7400D6C702 /* HttpLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpLog.m; sourceTree = "<group>"; };
-		2DFE42D22B877D7400D6C702 /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
-		2DFE42D42B877D7400D6C702 /* LLAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLAPIClient.m; sourceTree = "<group>"; };
-		2DFE42D62B877D7400D6C702 /* LLBaseServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBaseServer.h; sourceTree = "<group>"; };
-		2DFE42D72B877D7400D6C702 /* LLServerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLServerFactory.h; sourceTree = "<group>"; };
-		2DFE42D92B877D7400D6C702 /* WXServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXServer.m; sourceTree = "<group>"; };
-		2DFE42DA2B877D7400D6C702 /* WXServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXServer.h; sourceTree = "<group>"; };
-		2DFE42DB2B877D7400D6C702 /* LLBaseServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBaseServer.m; sourceTree = "<group>"; };
-		2DFE42DC2B877D7400D6C702 /* LLServerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLServerFactory.m; sourceTree = "<group>"; };
-		2DFE42DD2B877D7400D6C702 /* LLAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLAPIClient.h; sourceTree = "<group>"; };
-		2DFE42DF2B877D7400D6C702 /* RealReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealReachability.h; sourceTree = "<group>"; };
-		2DFE42E12B877D7400D6C702 /* PingFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingFoundation.h; sourceTree = "<group>"; };
-		2DFE42E22B877D7400D6C702 /* PingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingHelper.h; sourceTree = "<group>"; };
-		2DFE42E32B877D7400D6C702 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2DFE42E42B877D7400D6C702 /* PingFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingFoundation.m; sourceTree = "<group>"; };
-		2DFE42E52B877D7400D6C702 /* PingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingHelper.m; sourceTree = "<group>"; };
-		2DFE42E72B877D7400D6C702 /* LocalConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalConnection.h; sourceTree = "<group>"; };
-		2DFE42E82B877D7400D6C702 /* LocalConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalConnection.m; sourceTree = "<group>"; };
-		2DFE42EA2B877D7400D6C702 /* FSMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMDefines.h; sourceTree = "<group>"; };
-		2DFE42EB2B877D7400D6C702 /* ReachStateUnReachable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateUnReachable.h; sourceTree = "<group>"; };
-		2DFE42EC2B877D7400D6C702 /* ReachStateWWAN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateWWAN.h; sourceTree = "<group>"; };
-		2DFE42ED2B877D7400D6C702 /* ReachStateUnloaded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateUnloaded.h; sourceTree = "<group>"; };
-		2DFE42EE2B877D7400D6C702 /* FSMStateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMStateUtil.h; sourceTree = "<group>"; };
-		2DFE42EF2B877D7400D6C702 /* FSMEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMEngine.h; sourceTree = "<group>"; };
-		2DFE42F02B877D7400D6C702 /* ReachStateLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateLoading.h; sourceTree = "<group>"; };
-		2DFE42F12B877D7400D6C702 /* ReachState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachState.m; sourceTree = "<group>"; };
-		2DFE42F22B877D7400D6C702 /* ReachStateWIFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateWIFI.h; sourceTree = "<group>"; };
-		2DFE42F32B877D7400D6C702 /* ReachStateUnloaded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateUnloaded.m; sourceTree = "<group>"; };
-		2DFE42F42B877D7400D6C702 /* ReachStateUnReachable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateUnReachable.m; sourceTree = "<group>"; };
-		2DFE42F52B877D7400D6C702 /* ReachStateWWAN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateWWAN.m; sourceTree = "<group>"; };
-		2DFE42F62B877D7400D6C702 /* ReachState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachState.h; sourceTree = "<group>"; };
-		2DFE42F72B877D7400D6C702 /* ReachStateLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateLoading.m; sourceTree = "<group>"; };
-		2DFE42F82B877D7400D6C702 /* FSMEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSMEngine.m; sourceTree = "<group>"; };
-		2DFE42F92B877D7400D6C702 /* FSMStateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSMStateUtil.m; sourceTree = "<group>"; };
-		2DFE42FA2B877D7400D6C702 /* ReachStateWIFI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateWIFI.m; sourceTree = "<group>"; };
-		2DFE42FB2B877D7400D6C702 /* RealReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealReachability.m; sourceTree = "<group>"; };
-		2DFE431A2B877E5F00D6C702 /* NSString+LLUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LLUUID.h"; sourceTree = "<group>"; };
-		2DFE431B2B877E5F00D6C702 /* LLKeyChainSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLKeyChainSaver.h; sourceTree = "<group>"; };
-		2DFE431C2B877E5F00D6C702 /* LLKeyChainSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLKeyChainSaver.m; sourceTree = "<group>"; };
-		2DFE431D2B877E5F00D6C702 /* NSString+LLUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LLUUID.m"; sourceTree = "<group>"; };
-		2DFE43212B877FB000D6C702 /* AppleServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleServer.h; sourceTree = "<group>"; };
-		2DFE43222B877FB000D6C702 /* AppleServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleServer.m; sourceTree = "<group>"; };
+		2D5CC9292CE3016B008FE889 /* LocalConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalConnection.h; sourceTree = "<group>"; };
+		2D5CC92A2CE3016B008FE889 /* LocalConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalConnection.m; sourceTree = "<group>"; };
+		2D5CC92C2CE3016B008FE889 /* FSMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMDefines.h; sourceTree = "<group>"; };
+		2D5CC92D2CE3016B008FE889 /* FSMEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMEngine.h; sourceTree = "<group>"; };
+		2D5CC92E2CE3016B008FE889 /* FSMEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSMEngine.m; sourceTree = "<group>"; };
+		2D5CC92F2CE3016B008FE889 /* FSMStateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSMStateUtil.h; sourceTree = "<group>"; };
+		2D5CC9302CE3016B008FE889 /* FSMStateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSMStateUtil.m; sourceTree = "<group>"; };
+		2D5CC9312CE3016B008FE889 /* ReachState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachState.h; sourceTree = "<group>"; };
+		2D5CC9322CE3016B008FE889 /* ReachState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachState.m; sourceTree = "<group>"; };
+		2D5CC9332CE3016B008FE889 /* ReachStateLoading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateLoading.h; sourceTree = "<group>"; };
+		2D5CC9342CE3016B008FE889 /* ReachStateLoading.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateLoading.m; sourceTree = "<group>"; };
+		2D5CC9352CE3016B008FE889 /* ReachStateUnloaded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateUnloaded.h; sourceTree = "<group>"; };
+		2D5CC9362CE3016B008FE889 /* ReachStateUnloaded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateUnloaded.m; sourceTree = "<group>"; };
+		2D5CC9372CE3016B008FE889 /* ReachStateUnReachable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateUnReachable.h; sourceTree = "<group>"; };
+		2D5CC9382CE3016B008FE889 /* ReachStateUnReachable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateUnReachable.m; sourceTree = "<group>"; };
+		2D5CC9392CE3016B008FE889 /* ReachStateWIFI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateWIFI.h; sourceTree = "<group>"; };
+		2D5CC93A2CE3016B008FE889 /* ReachStateWIFI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateWIFI.m; sourceTree = "<group>"; };
+		2D5CC93B2CE3016B008FE889 /* ReachStateWWAN.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachStateWWAN.h; sourceTree = "<group>"; };
+		2D5CC93C2CE3016B008FE889 /* ReachStateWWAN.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachStateWWAN.m; sourceTree = "<group>"; };
+		2D5CC93E2CE3016B008FE889 /* PingFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingFoundation.h; sourceTree = "<group>"; };
+		2D5CC93F2CE3016B008FE889 /* PingFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingFoundation.m; sourceTree = "<group>"; };
+		2D5CC9402CE3016B008FE889 /* PingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PingHelper.h; sourceTree = "<group>"; };
+		2D5CC9412CE3016B008FE889 /* PingHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PingHelper.m; sourceTree = "<group>"; };
+		2D5CC9422CE3016B008FE889 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2D5CC9442CE3016B008FE889 /* RealReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealReachability.h; sourceTree = "<group>"; };
+		2D5CC9452CE3016B008FE889 /* RealReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealReachability.m; sourceTree = "<group>"; };
+		2D5CC94D2CE3016B008FE889 /* LLBaseRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBaseRequestModel.h; sourceTree = "<group>"; };
+		2D5CC94E2CE3016B008FE889 /* LLBaseRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBaseRequestModel.m; sourceTree = "<group>"; };
+		2D5CC94F2CE3016B008FE889 /* LLRequestDispatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLRequestDispatch.h; sourceTree = "<group>"; };
+		2D5CC9502CE3016B008FE889 /* LLRequestDispatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLRequestDispatch.m; sourceTree = "<group>"; };
+		2D5CC9512CE3016B008FE889 /* LLRequestRetryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLRequestRetryHandler.h; sourceTree = "<group>"; };
+		2D5CC9522CE3016B008FE889 /* LLRequestRetryHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLRequestRetryHandler.m; sourceTree = "<group>"; };
+		2D5CC9532CE3016B008FE889 /* LLResponseFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLResponseFormatter.h; sourceTree = "<group>"; };
+		2D5CC9542CE3016B008FE889 /* LLResponseFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLResponseFormatter.m; sourceTree = "<group>"; };
+		2D5CC9562CE3016B008FE889 /* AppleServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleServer.h; sourceTree = "<group>"; };
+		2D5CC9572CE3016B008FE889 /* AppleServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleServer.m; sourceTree = "<group>"; };
+		2D5CC9592CE3016B008FE889 /* GreenCloudServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenCloudServer.h; sourceTree = "<group>"; };
+		2D5CC95A2CE3016B008FE889 /* GreenCloudServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GreenCloudServer.m; sourceTree = "<group>"; };
+		2D5CC95C2CE3016B008FE889 /* WXServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXServer.h; sourceTree = "<group>"; };
+		2D5CC95D2CE3016B008FE889 /* WXServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WXServer.m; sourceTree = "<group>"; };
+		2D5CC95F2CE3016B008FE889 /* LLBaseServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLBaseServer.h; sourceTree = "<group>"; };
+		2D5CC9602CE3016B008FE889 /* LLBaseServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLBaseServer.m; sourceTree = "<group>"; };
+		2D5CC9612CE3016B008FE889 /* LLServerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLServerFactory.h; sourceTree = "<group>"; };
+		2D5CC9622CE3016B008FE889 /* LLServerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLServerFactory.m; sourceTree = "<group>"; };
+		2D5CC9642CE3016B008FE889 /* LLAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLAPIClient.h; sourceTree = "<group>"; };
+		2D5CC9652CE3016B008FE889 /* LLAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLAPIClient.m; sourceTree = "<group>"; };
+		2D5CC9672CE3016B008FE889 /* HttpLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpLog.h; sourceTree = "<group>"; };
+		2D5CC9682CE3016B008FE889 /* HttpLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpLog.m; sourceTree = "<group>"; };
+		2D5CC9692CE3016B008FE889 /* HttpRequestTrace.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HttpRequestTrace.plist; sourceTree = "<group>"; };
+		2D5CC96A2CE3016B008FE889 /* HttpTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpTool.h; sourceTree = "<group>"; };
+		2D5CC96B2CE3016B008FE889 /* HttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpTool.m; sourceTree = "<group>"; };
+		2D5CC96D2CE3016B008FE889 /* responseFormat.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = responseFormat.plist; sourceTree = "<group>"; };
+		2D5CC96E2CE3016B008FE889 /* ServerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
+		2D5CC98D2CE30316008FE889 /* NSString+NetResponseVerify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+NetResponseVerify.h"; sourceTree = "<group>"; };
+		2D5CC98E2CE30316008FE889 /* NSString+NetResponseVerify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+NetResponseVerify.m"; sourceTree = "<group>"; };
+		2D5CC9902CE30316008FE889 /* LLSignatureGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLSignatureGenerator.h; sourceTree = "<group>"; };
+		2D5CC9912CE30316008FE889 /* LLSignatureGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLSignatureGenerator.m; sourceTree = "<group>"; };
+		2D5CC9932CE30316008FE889 /* LLKeyChainSaver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLKeyChainSaver.h; sourceTree = "<group>"; };
+		2D5CC9942CE30316008FE889 /* LLKeyChainSaver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLKeyChainSaver.m; sourceTree = "<group>"; };
+		2D5CC9952CE30316008FE889 /* NSString+LLUUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LLUUID.h"; sourceTree = "<group>"; };
+		2D5CC9962CE30316008FE889 /* NSString+LLUUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LLUUID.m"; sourceTree = "<group>"; };
+		2D5CC9982CE30316008FE889 /* LLAppContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LLAppContext.h; sourceTree = "<group>"; };
+		2D5CC9992CE30316008FE889 /* LLAppContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LLAppContext.m; sourceTree = "<group>"; };
+		2D5CC9A02CE303FB008FE889 /* GreenTreeServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GreenTreeServer.h; sourceTree = "<group>"; };
+		2D5CC9A12CE303FB008FE889 /* GreenTreeServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GreenTreeServer.m; sourceTree = "<group>"; };
 		7B468FAD1D5415666EE21E27 /* Pods-NetWork_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetWork_Example.debug.xcconfig"; path = "Target Support Files/Pods-NetWork_Example/Pods-NetWork_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		CF0959A0413E1924C9BEF813 /* Pods_NetWork_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NetWork_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4501D19D01D66ADF845A9D0 /* Pods-NetWork_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NetWork_Example.release.xcconfig"; path = "Target Support Files/Pods-NetWork_Example/Pods-NetWork_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -187,186 +190,220 @@
 			path = router;
 			sourceTree = "<group>";
 		};
-		2D93E4332B8C1E2800BDFCD3 /* Request */ = {
+		2D5CC92B2CE3016B008FE889 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
-				2DFE42C12B877D7400D6C702 /* LLBaseRequestModel.h */,
-				2DFE42C92B877D7400D6C702 /* LLBaseRequestModel.m */,
-				2DFE42BE2B877D7400D6C702 /* LLRequestDispatch.h */,
-				2DFE42C62B877D7400D6C702 /* LLRequestDispatch.m */,
-				2DFE42C52B877D7400D6C702 /* LLResponseFormatter.h */,
-				2DFE42BB2B877D7400D6C702 /* LLResponseFormatter.m */,
-				2DFE42BD2B877D7400D6C702 /* LLRequestRetryHandler.h */,
-				2DFE42C32B877D7400D6C702 /* LLRequestRetryHandler.m */,
+				2D5CC9292CE3016B008FE889 /* LocalConnection.h */,
+				2D5CC92A2CE3016B008FE889 /* LocalConnection.m */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
+		2D5CC93D2CE3016B008FE889 /* FSM */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC92C2CE3016B008FE889 /* FSMDefines.h */,
+				2D5CC92D2CE3016B008FE889 /* FSMEngine.h */,
+				2D5CC92E2CE3016B008FE889 /* FSMEngine.m */,
+				2D5CC92F2CE3016B008FE889 /* FSMStateUtil.h */,
+				2D5CC9302CE3016B008FE889 /* FSMStateUtil.m */,
+				2D5CC9312CE3016B008FE889 /* ReachState.h */,
+				2D5CC9322CE3016B008FE889 /* ReachState.m */,
+				2D5CC9332CE3016B008FE889 /* ReachStateLoading.h */,
+				2D5CC9342CE3016B008FE889 /* ReachStateLoading.m */,
+				2D5CC9352CE3016B008FE889 /* ReachStateUnloaded.h */,
+				2D5CC9362CE3016B008FE889 /* ReachStateUnloaded.m */,
+				2D5CC9372CE3016B008FE889 /* ReachStateUnReachable.h */,
+				2D5CC9382CE3016B008FE889 /* ReachStateUnReachable.m */,
+				2D5CC9392CE3016B008FE889 /* ReachStateWIFI.h */,
+				2D5CC93A2CE3016B008FE889 /* ReachStateWIFI.m */,
+				2D5CC93B2CE3016B008FE889 /* ReachStateWWAN.h */,
+				2D5CC93C2CE3016B008FE889 /* ReachStateWWAN.m */,
+			);
+			path = FSM;
+			sourceTree = "<group>";
+		};
+		2D5CC9432CE3016B008FE889 /* Ping */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC93E2CE3016B008FE889 /* PingFoundation.h */,
+				2D5CC93F2CE3016B008FE889 /* PingFoundation.m */,
+				2D5CC9402CE3016B008FE889 /* PingHelper.h */,
+				2D5CC9412CE3016B008FE889 /* PingHelper.m */,
+				2D5CC9422CE3016B008FE889 /* README.md */,
+			);
+			path = Ping;
+			sourceTree = "<group>";
+		};
+		2D5CC9462CE3016B008FE889 /* RealReachability */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC92B2CE3016B008FE889 /* Connection */,
+				2D5CC93D2CE3016B008FE889 /* FSM */,
+				2D5CC9432CE3016B008FE889 /* Ping */,
+				2D5CC9442CE3016B008FE889 /* RealReachability.h */,
+				2D5CC9452CE3016B008FE889 /* RealReachability.m */,
+			);
+			path = RealReachability;
+			sourceTree = "<group>";
+		};
+		2D5CC94C2CE3016B008FE889 /* Assistant */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC99A2CE30316008FE889 /* AppContext */,
+				2D5CC98F2CE30316008FE889 /* NSString+Verify */,
+				2D5CC9922CE30316008FE889 /* SignatureGenerator */,
+				2D5CC9972CE30316008FE889 /* VirtualMacAdress */,
+			);
+			path = Assistant;
+			sourceTree = "<group>";
+		};
+		2D5CC9552CE3016B008FE889 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC94D2CE3016B008FE889 /* LLBaseRequestModel.h */,
+				2D5CC94E2CE3016B008FE889 /* LLBaseRequestModel.m */,
+				2D5CC94F2CE3016B008FE889 /* LLRequestDispatch.h */,
+				2D5CC9502CE3016B008FE889 /* LLRequestDispatch.m */,
+				2D5CC9512CE3016B008FE889 /* LLRequestRetryHandler.h */,
+				2D5CC9522CE3016B008FE889 /* LLRequestRetryHandler.m */,
+				2D5CC9532CE3016B008FE889 /* LLResponseFormatter.h */,
+				2D5CC9542CE3016B008FE889 /* LLResponseFormatter.m */,
 			);
 			path = Request;
 			sourceTree = "<group>";
 		};
-		2DD4C96B2B88A351002D09E8 /* GreeenCloud */ = {
+		2D5CC9582CE3016B008FE889 /* Apple */ = {
 			isa = PBXGroup;
 			children = (
-				2DD4C96C2B88A351002D09E8 /* GreenCloudServer.h */,
-				2DD4C96D2B88A351002D09E8 /* GreenCloudServer.m */,
+				2D5CC9562CE3016B008FE889 /* AppleServer.h */,
+				2D5CC9572CE3016B008FE889 /* AppleServer.m */,
+			);
+			path = Apple;
+			sourceTree = "<group>";
+		};
+		2D5CC95B2CE3016B008FE889 /* GreeenCloud */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9592CE3016B008FE889 /* GreenCloudServer.h */,
+				2D5CC95A2CE3016B008FE889 /* GreenCloudServer.m */,
 			);
 			path = GreeenCloud;
+			sourceTree = "<group>";
+		};
+		2D5CC95E2CE3016B008FE889 /* WX */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC95C2CE3016B008FE889 /* WXServer.h */,
+				2D5CC95D2CE3016B008FE889 /* WXServer.m */,
+			);
+			path = WX;
+			sourceTree = "<group>";
+		};
+		2D5CC9632CE3016B008FE889 /* Servers */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9A22CE303FB008FE889 /* GreeenTree */,
+				2D5CC9582CE3016B008FE889 /* Apple */,
+				2D5CC95B2CE3016B008FE889 /* GreeenCloud */,
+				2D5CC95E2CE3016B008FE889 /* WX */,
+				2D5CC95F2CE3016B008FE889 /* LLBaseServer.h */,
+				2D5CC9602CE3016B008FE889 /* LLBaseServer.m */,
+				2D5CC9612CE3016B008FE889 /* LLServerFactory.h */,
+				2D5CC9622CE3016B008FE889 /* LLServerFactory.m */,
+			);
+			path = Servers;
+			sourceTree = "<group>";
+		};
+		2D5CC9662CE3016B008FE889 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9642CE3016B008FE889 /* LLAPIClient.h */,
+				2D5CC9652CE3016B008FE889 /* LLAPIClient.m */,
+				2D5CC9552CE3016B008FE889 /* Request */,
+				2D5CC9632CE3016B008FE889 /* Servers */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
+		2D5CC96C2CE3016B008FE889 /* HttpTool */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9672CE3016B008FE889 /* HttpLog.h */,
+				2D5CC9682CE3016B008FE889 /* HttpLog.m */,
+				2D5CC9692CE3016B008FE889 /* HttpRequestTrace.plist */,
+				2D5CC96A2CE3016B008FE889 /* HttpTool.h */,
+				2D5CC96B2CE3016B008FE889 /* HttpTool.m */,
+			);
+			path = HttpTool;
+			sourceTree = "<group>";
+		};
+		2D5CC96F2CE3016B008FE889 /* NetWork */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC96E2CE3016B008FE889 /* ServerConfig.h */,
+				2D5CC96D2CE3016B008FE889 /* responseFormat.plist */,
+				2D5CC9662CE3016B008FE889 /* Client */,
+				2D5CC96C2CE3016B008FE889 /* HttpTool */,
+				2D5CC94C2CE3016B008FE889 /* Assistant */,
+			);
+			path = NetWork;
+			sourceTree = "<group>";
+		};
+		2D5CC98F2CE30316008FE889 /* NSString+Verify */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC98D2CE30316008FE889 /* NSString+NetResponseVerify.h */,
+				2D5CC98E2CE30316008FE889 /* NSString+NetResponseVerify.m */,
+			);
+			path = "NSString+Verify";
+			sourceTree = "<group>";
+		};
+		2D5CC9922CE30316008FE889 /* SignatureGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9902CE30316008FE889 /* LLSignatureGenerator.h */,
+				2D5CC9912CE30316008FE889 /* LLSignatureGenerator.m */,
+			);
+			path = SignatureGenerator;
+			sourceTree = "<group>";
+		};
+		2D5CC9972CE30316008FE889 /* VirtualMacAdress */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9932CE30316008FE889 /* LLKeyChainSaver.h */,
+				2D5CC9942CE30316008FE889 /* LLKeyChainSaver.m */,
+				2D5CC9952CE30316008FE889 /* NSString+LLUUID.h */,
+				2D5CC9962CE30316008FE889 /* NSString+LLUUID.m */,
+			);
+			path = VirtualMacAdress;
+			sourceTree = "<group>";
+		};
+		2D5CC99A2CE30316008FE889 /* AppContext */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9982CE30316008FE889 /* LLAppContext.h */,
+				2D5CC9992CE30316008FE889 /* LLAppContext.m */,
+			);
+			path = AppContext;
+			sourceTree = "<group>";
+		};
+		2D5CC9A22CE303FB008FE889 /* GreeenTree */ = {
+			isa = PBXGroup;
+			children = (
+				2D5CC9A02CE303FB008FE889 /* GreenTreeServer.h */,
+				2D5CC9A12CE303FB008FE889 /* GreenTreeServer.m */,
+			);
+			path = GreeenTree;
 			sourceTree = "<group>";
 		};
 		2DFE42B82B877D7400D6C702 /* Network Component */ = {
 			isa = PBXGroup;
 			children = (
-				2DFE42B92B877D7400D6C702 /* NetWork */,
-				2DFE42DE2B877D7400D6C702 /* RealReachability */,
+				2D5CC96F2CE3016B008FE889 /* NetWork */,
+				2D5CC9462CE3016B008FE889 /* RealReachability */,
 			);
 			path = "Network Component";
-			sourceTree = "<group>";
-		};
-		2DFE42B92B877D7400D6C702 /* NetWork */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42CB2B877D7400D6C702 /* ServerConfig.h */,
-				2DFE42CC2B877D7400D6C702 /* responseFormat.plist */,
-				2DFE42BA2B877D7400D6C702 /* Assistant */,
-				2DFE42CD2B877D7400D6C702 /* HttpTool */,
-				2DFE42D32B877D7400D6C702 /* Client */,
-			);
-			path = NetWork;
-			sourceTree = "<group>";
-		};
-		2DFE42BA2B877D7400D6C702 /* Assistant */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE43192B877E5F00D6C702 /* VirtualMacAdress */,
-				2DFE42BC2B877D7400D6C702 /* NSString+NetResponseVerify.m */,
-				2DFE42BF2B877D7400D6C702 /* LLAppContext.h */,
-				2DFE42C82B877D7400D6C702 /* LLAppContext.m */,
-				2DFE42C72B877D7400D6C702 /* LLSignatureGenerator.h */,
-				2DFE42C02B877D7400D6C702 /* LLSignatureGenerator.m */,
-				2DFE42C42B877D7400D6C702 /* NSString+NetResponseVerify.h */,
-			);
-			path = Assistant;
-			sourceTree = "<group>";
-		};
-		2DFE42CD2B877D7400D6C702 /* HttpTool */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42CE2B877D7400D6C702 /* HttpLog.h */,
-				2DFE42D12B877D7400D6C702 /* HttpLog.m */,
-				2DFE42CF2B877D7400D6C702 /* HttpTool.h */,
-				2DFE42D22B877D7400D6C702 /* HttpTool.m */,
-				2DFE42D02B877D7400D6C702 /* HttpRequestTrace.plist */,
-			);
-			path = HttpTool;
-			sourceTree = "<group>";
-		};
-		2DFE42D32B877D7400D6C702 /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42DD2B877D7400D6C702 /* LLAPIClient.h */,
-				2DFE42D42B877D7400D6C702 /* LLAPIClient.m */,
-				2D93E4332B8C1E2800BDFCD3 /* Request */,
-				2DFE42D52B877D7400D6C702 /* Servers */,
-			);
-			path = Client;
-			sourceTree = "<group>";
-		};
-		2DFE42D52B877D7400D6C702 /* Servers */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42D62B877D7400D6C702 /* LLBaseServer.h */,
-				2DFE42DB2B877D7400D6C702 /* LLBaseServer.m */,
-				2DFE42D72B877D7400D6C702 /* LLServerFactory.h */,
-				2DFE42DC2B877D7400D6C702 /* LLServerFactory.m */,
-				2DD4C96B2B88A351002D09E8 /* GreeenCloud */,
-				2DFE42D82B877D7400D6C702 /* WX */,
-				2DFE43202B877FB000D6C702 /* Apple */,
-			);
-			path = Servers;
-			sourceTree = "<group>";
-		};
-		2DFE42D82B877D7400D6C702 /* WX */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42DA2B877D7400D6C702 /* WXServer.h */,
-				2DFE42D92B877D7400D6C702 /* WXServer.m */,
-			);
-			path = WX;
-			sourceTree = "<group>";
-		};
-		2DFE42DE2B877D7400D6C702 /* RealReachability */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42DF2B877D7400D6C702 /* RealReachability.h */,
-				2DFE42E02B877D7400D6C702 /* Ping */,
-				2DFE42E62B877D7400D6C702 /* Connection */,
-				2DFE42E92B877D7400D6C702 /* FSM */,
-				2DFE42FB2B877D7400D6C702 /* RealReachability.m */,
-			);
-			path = RealReachability;
-			sourceTree = "<group>";
-		};
-		2DFE42E02B877D7400D6C702 /* Ping */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42E12B877D7400D6C702 /* PingFoundation.h */,
-				2DFE42E22B877D7400D6C702 /* PingHelper.h */,
-				2DFE42E32B877D7400D6C702 /* README.md */,
-				2DFE42E42B877D7400D6C702 /* PingFoundation.m */,
-				2DFE42E52B877D7400D6C702 /* PingHelper.m */,
-			);
-			path = Ping;
-			sourceTree = "<group>";
-		};
-		2DFE42E62B877D7400D6C702 /* Connection */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42E72B877D7400D6C702 /* LocalConnection.h */,
-				2DFE42E82B877D7400D6C702 /* LocalConnection.m */,
-			);
-			path = Connection;
-			sourceTree = "<group>";
-		};
-		2DFE42E92B877D7400D6C702 /* FSM */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE42EA2B877D7400D6C702 /* FSMDefines.h */,
-				2DFE42EB2B877D7400D6C702 /* ReachStateUnReachable.h */,
-				2DFE42EC2B877D7400D6C702 /* ReachStateWWAN.h */,
-				2DFE42ED2B877D7400D6C702 /* ReachStateUnloaded.h */,
-				2DFE42EE2B877D7400D6C702 /* FSMStateUtil.h */,
-				2DFE42EF2B877D7400D6C702 /* FSMEngine.h */,
-				2DFE42F02B877D7400D6C702 /* ReachStateLoading.h */,
-				2DFE42F12B877D7400D6C702 /* ReachState.m */,
-				2DFE42F22B877D7400D6C702 /* ReachStateWIFI.h */,
-				2DFE42F32B877D7400D6C702 /* ReachStateUnloaded.m */,
-				2DFE42F42B877D7400D6C702 /* ReachStateUnReachable.m */,
-				2DFE42F52B877D7400D6C702 /* ReachStateWWAN.m */,
-				2DFE42F62B877D7400D6C702 /* ReachState.h */,
-				2DFE42F72B877D7400D6C702 /* ReachStateLoading.m */,
-				2DFE42F82B877D7400D6C702 /* FSMEngine.m */,
-				2DFE42F92B877D7400D6C702 /* FSMStateUtil.m */,
-				2DFE42FA2B877D7400D6C702 /* ReachStateWIFI.m */,
-			);
-			path = FSM;
-			sourceTree = "<group>";
-		};
-		2DFE43192B877E5F00D6C702 /* VirtualMacAdress */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE431A2B877E5F00D6C702 /* NSString+LLUUID.h */,
-				2DFE431D2B877E5F00D6C702 /* NSString+LLUUID.m */,
-				2DFE431B2B877E5F00D6C702 /* LLKeyChainSaver.h */,
-				2DFE431C2B877E5F00D6C702 /* LLKeyChainSaver.m */,
-			);
-			path = VirtualMacAdress;
-			sourceTree = "<group>";
-		};
-		2DFE43202B877FB000D6C702 /* Apple */ = {
-			isa = PBXGroup;
-			children = (
-				2DFE43212B877FB000D6C702 /* AppleServer.h */,
-				2DFE43222B877FB000D6C702 /* AppleServer.m */,
-			);
-			path = Apple;
 			sourceTree = "<group>";
 		};
 		442B1B6A4F02ED235CDF7A18 /* Pods */ = {
@@ -445,11 +482,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DFE430C2B877D7400D6C702 /* README.md in Resources */,
+				2D5CC98C2CE3016B008FE889 /* responseFormat.plist in Resources */,
 				2D18DDC823559CC7001A5D95 /* LaunchScreen.storyboard in Resources */,
-				2DFE43052B877D7400D6C702 /* HttpRequestTrace.plist in Resources */,
+				2D5CC98A2CE3016B008FE889 /* HttpRequestTrace.plist in Resources */,
 				2D18DDC523559CC7001A5D95 /* Assets.xcassets in Resources */,
-				2DFE43042B877D7400D6C702 /* responseFormat.plist in Resources */,
+				2D5CC97B2CE3016B008FE889 /* README.md in Resources */,
 				2D18DDC323559CC4001A5D95 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,39 +540,40 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DFE431E2B877E5F00D6C702 /* LLKeyChainSaver.m in Sources */,
-				2DFE43032B877D7400D6C702 /* LLBaseRequestModel.m in Sources */,
-				2DFE430D2B877D7500D6C702 /* PingFoundation.m in Sources */,
-				2DFE43162B877D7500D6C702 /* FSMStateUtil.m in Sources */,
-				2DFE431F2B877E5F00D6C702 /* NSString+LLUUID.m in Sources */,
-				2DFE43022B877D7400D6C702 /* LLAppContext.m in Sources */,
-				2DFE430F2B877D7500D6C702 /* LocalConnection.m in Sources */,
-				2DFE43012B877D7400D6C702 /* LLRequestDispatch.m in Sources */,
+				2D5CC9792CE3016B008FE889 /* PingFoundation.m in Sources */,
+				2D5CC9882CE3016B008FE889 /* LLAPIClient.m in Sources */,
+				2D5CC99C2CE30316008FE889 /* LLSignatureGenerator.m in Sources */,
+				2D5CC9712CE3016B008FE889 /* FSMEngine.m in Sources */,
+				2D5CC97C2CE3016B008FE889 /* RealReachability.m in Sources */,
 				2D18DE4C23559FCD001A5D95 /* LLRouterController.m in Sources */,
-				2DFE43182B877D7500D6C702 /* RealReachability.m in Sources */,
-				2DFE42FE2B877D7400D6C702 /* LLSignatureGenerator.m in Sources */,
-				2DFE430A2B877D7400D6C702 /* LLBaseServer.m in Sources */,
-				2DFE43152B877D7500D6C702 /* FSMEngine.m in Sources */,
+				2D5CC97F2CE3016B008FE889 /* LLBaseRequestModel.m in Sources */,
+				2D5CC99F2CE30316008FE889 /* LLAppContext.m in Sources */,
+				2D5CC99B2CE30316008FE889 /* NSString+NetResponseVerify.m in Sources */,
+				2D5CC9852CE3016B008FE889 /* WXServer.m in Sources */,
+				2D5CC9722CE3016B008FE889 /* FSMStateUtil.m in Sources */,
+				2D5CC9892CE3016B008FE889 /* HttpLog.m in Sources */,
+				2D5CC9822CE3016B008FE889 /* LLResponseFormatter.m in Sources */,
+				2D5CC9742CE3016B008FE889 /* ReachStateLoading.m in Sources */,
+				2D5CC9732CE3016B008FE889 /* ReachState.m in Sources */,
+				2D5CC9702CE3016B008FE889 /* LocalConnection.m in Sources */,
+				2D5CC9772CE3016B008FE889 /* ReachStateWIFI.m in Sources */,
+				2D5CC9862CE3016B008FE889 /* LLBaseServer.m in Sources */,
+				2D5CC99E2CE30316008FE889 /* NSString+LLUUID.m in Sources */,
+				2D5CC9802CE3016B008FE889 /* LLRequestDispatch.m in Sources */,
+				2D5CC9782CE3016B008FE889 /* ReachStateWWAN.m in Sources */,
+				2D5CC97A2CE3016B008FE889 /* PingHelper.m in Sources */,
 				2D18DDC023559CC4001A5D95 /* ViewController.m in Sources */,
-				2DFE43232B877FB000D6C702 /* AppleServer.m in Sources */,
-				2DFE43132B877D7500D6C702 /* ReachStateWWAN.m in Sources */,
-				2DFE430E2B877D7500D6C702 /* PingHelper.m in Sources */,
-				2DFE42FC2B877D7400D6C702 /* LLResponseFormatter.m in Sources */,
-				2DFE43112B877D7500D6C702 /* ReachStateUnloaded.m in Sources */,
+				2D5CC9752CE3016B008FE889 /* ReachStateUnloaded.m in Sources */,
+				2D5CC9812CE3016B008FE889 /* LLRequestRetryHandler.m in Sources */,
+				2D5CC9762CE3016B008FE889 /* ReachStateUnReachable.m in Sources */,
+				2D5CC9A32CE303FB008FE889 /* GreenTreeServer.m in Sources */,
+				2D5CC9872CE3016B008FE889 /* LLServerFactory.m in Sources */,
+				2D5CC9842CE3016B008FE889 /* GreenCloudServer.m in Sources */,
+				2D5CC99D2CE30316008FE889 /* LLKeyChainSaver.m in Sources */,
 				2D18DDBA23559CC4001A5D95 /* AppDelegate.m in Sources */,
-				2DD4C96E2B88A351002D09E8 /* GreenCloudServer.m in Sources */,
-				2DFE43082B877D7400D6C702 /* LLAPIClient.m in Sources */,
 				2D18DDCB23559CC7001A5D95 /* main.m in Sources */,
-				2DFE43122B877D7500D6C702 /* ReachStateUnReachable.m in Sources */,
-				2DFE43092B877D7400D6C702 /* WXServer.m in Sources */,
-				2DFE430B2B877D7400D6C702 /* LLServerFactory.m in Sources */,
-				2DFE42FD2B877D7400D6C702 /* NSString+NetResponseVerify.m in Sources */,
-				2DFE43062B877D7400D6C702 /* HttpLog.m in Sources */,
-				2DFE43102B877D7500D6C702 /* ReachState.m in Sources */,
-				2DFE43002B877D7400D6C702 /* LLRequestRetryHandler.m in Sources */,
-				2DFE43142B877D7500D6C702 /* ReachStateLoading.m in Sources */,
-				2DFE43072B877D7400D6C702 /* HttpTool.m in Sources */,
-				2DFE43172B877D7500D6C702 /* ReachStateWIFI.m in Sources */,
+				2D5CC9832CE3016B008FE889 /* AppleServer.m in Sources */,
+				2D5CC98B2CE3016B008FE889 /* HttpTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,20 +714,18 @@
 			baseConfigurationReference = 7B468FAD1D5415666EE21E27 /* Pods-NetWork_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 4DRLM9LM74;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VSU3CW8QUS;
 				INFOPLIST_FILE = NetWork_Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.liujiang.wildcard-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.liujiang.wildcard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = uninversal;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -699,20 +735,18 @@
 			baseConfigurationReference = F4501D19D01D66ADF845A9D0 /* Pods-NetWork_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 4DRLM9LM74;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VSU3CW8QUS;
 				INFOPLIST_FILE = NetWork_Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.liujiang.wildcard-";
+				PRODUCT_BUNDLE_IDENTIFIER = com.liujiang.wildcard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = uninversal;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

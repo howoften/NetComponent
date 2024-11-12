@@ -10,14 +10,12 @@
 
 @interface LLRequestRetryHandler : NSObject
 
-@property (nonatomic, strong)NSNumber *maxRetryCount; //default 0
+@property (nonatomic, strong)NSNumber *maxRetryCount; //default INT64_MAX
 
 @property (nonatomic, strong)NSNumber *maxRetryDuration;//default nil
 
 @property (nonatomic, strong)NSNumber *retryInterval;//default 0
 
-
-@property (nonatomic, strong)NSNumber *errorCode;
-@property (nonatomic, copy)BOOL(^retryCondition)(void);
+@property (nonatomic, copy)BOOL(^retryCondition)(id resp);
 
 @end

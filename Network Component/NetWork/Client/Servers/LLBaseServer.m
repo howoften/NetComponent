@@ -20,6 +20,14 @@
 
 @implementation LLBaseServer
 @synthesize privateKey = _privateKey, hostAddress = _hostAddress;
++ (id<LLBaseServiceProtocol>)sharedInstance {
+    static LLBaseServer *shared = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shared = [[LLBaseServer alloc] init];
+    });
+    return shared;
+}
 
 - (instancetype)init
 {
@@ -27,10 +35,11 @@
     if (self) {
         if ([self conformsToProtocol:@protocol(LLBaseServiceProtocol)]) {
             self.server = (id<LLBaseServiceProtocol>)self;
-            self.httpTool = [[HttpTool alloc] init];
-#ifdef LLSERVER_ENV_RELEASE
+#if defined LLSERVER_ENV_RELEASE && !defined DEBUG
             self.environmentType = LLEnvironmentTypeRelease;
+            HttpTool.disableProxySetting = YES;
 #else
+            HttpTool.disableProxySetting = NO;
             NSNumber *environmentType = [[NSUserDefaults standardUserDefaults] objectForKey:@"environmentType"];
             if (environmentType) {
                 self.environmentType = [environmentType integerValue];
@@ -44,6 +53,7 @@
 #endif
             }
 #endif
+            self.httpTool = [[HttpTool alloc] init];
         }else {
             NSAssert(NO, @"### A server must conform LLBaseServiceProtocol before it work");
 
@@ -81,6 +91,21 @@
         }
     }
     return _hostAddress;
+}
+
+- (NSString *)developApiBaseUrl {
+    return nil;
+}
+- (NSString *)testApiBaseUrl {
+    return nil;
+}
+
+- (NSString *)prereleaseApiBaseUrl {
+    return nil;
+}
+
+- (NSString *)releaseApiBaseUrl {
+    return nil;
 }
 
 - (NSString *)customApiHost {

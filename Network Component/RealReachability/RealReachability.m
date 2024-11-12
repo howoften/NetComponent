@@ -6,9 +6,10 @@
 //  Copyright © 2016 Dustturtle. All rights reserved.
 //
 
+#include <ifaddrs.h>
+
 #import "RealReachability.h"
 #import "FSMEngine.h"
-#import "LocalConnection.h"
 #import "PingHelper.h"
 #import <UIKit/UIKit.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
@@ -26,10 +27,17 @@
 
 NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChangedNotification";
 
+NSString *const kRRVPNStatusChangedNotification = @"kRRVPNStatusChangedNotification";
+
 @interface RealReachability()
+{
+    BOOL _vpnFlag;
+}
+
 @property (nonatomic, strong) FSMEngine *engine;
 @property (nonatomic, assign) BOOL isNotifying;
 
+@property (nonatomic,strong) NSArray *typeStrings5G;
 @property (nonatomic,strong) NSArray *typeStrings4G;
 @property (nonatomic,strong) NSArray *typeStrings3G;
 @property (nonatomic,strong) NSArray *typeStrings2G;
@@ -41,6 +49,7 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
 
 /// for double check
 @property (nonatomic, strong) PingHelper *pingChecker;
+
 @end
 
 @implementation RealReachability
@@ -68,16 +77,21 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
         
         _typeStrings4G = @[CTRadioAccessTechnologyLTE];
         
+        _typeStrings5G = @[@"CTRadioAccessTechnologyNR", @"CTRadioAccessTechnologyNRNSA"];
+        
         _hostForPing = kDefaultHost;
         _hostForCheck = kDefaultHost;
         _autoCheckInterval = kDefaultCheckInterval;
         _pingTimeout = kDefaultPingTimeout;
+        
+        _vpnFlag = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(appBecomeActive)
                                                      name:UIApplicationDidBecomeActiveNotification
                                                    object:nil];
         
+        _localObserver = [[LocalConnection alloc] init];
         _pingHelper = [[PingHelper alloc] init];
         _pingChecker = [[PingHelper alloc] init];
     }
@@ -90,7 +104,8 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
     
     self.engine = nil;
     
-    [GLocalConnection stopNotifier];
+    [self.localObserver stopNotifier];
+    _localObserver = nil;
 }
 
 #pragma mark - Handle system event
@@ -107,13 +122,13 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
 
 + (instancetype)sharedInstance
 {
-    static id localConnection = nil;
+    static id sharedRRInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        localConnection = [[self alloc] init];
+        sharedRRInstance = [[self alloc] init];
     });
     
-    return localConnection;
+    return sharedRRInstance;
 }
 
 #pragma mark - actions
@@ -132,7 +147,7 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
     NSDictionary *inputDic = @{kEventKeyID:@(RREventLoad)};
     [self.engine receiveInput:inputDic];
     
-    [GLocalConnection startNotifier];
+    [self.localObserver startNotifier];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(localConnectionHandler:)
                                                  name:kLocalConnectionChangedNotification
@@ -153,6 +168,12 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
 
 - (void)stopNotifier
 {
+    if (!self.isNotifying)
+    {
+        // avoid duplicate action
+        return;
+    }
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:kLocalConnectionChangedNotification
                                                   object:nil];
@@ -163,7 +184,7 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
     NSDictionary *inputDic = @{kEventKeyID:@(RREventUnLoad)};
     [self.engine receiveInput:inputDic];
     
-    [GLocalConnection stopNotifier];
+    [self.localObserver stopNotifier];
     
     self.isNotifying = NO;
 }
@@ -173,7 +194,7 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
 - (void)reachabilityWithBlock:(void (^)(ReachabilityStatus status))asyncHandler
 {
     // logic optimization: no need to ping when Local connection unavailable!
-    if ([GLocalConnection currentLocalConnectionStatus] == LC_UnReachable)
+    if ([self.localObserver currentLocalConnectionStatus] == LC_UnReachable)
     {
         if (asyncHandler != nil)
         {
@@ -182,10 +203,22 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
         return;
     }
     
+    // special case, VPN on; just skipping (ICMP not working now).
+    if ([self isVPNOn])
+    {
+        ReachabilityStatus status = [self currentReachabilityStatus];
+        if (asyncHandler != nil)
+        {
+            asyncHandler(status);
+        }
+        return;
+    }
+    
     __weak __typeof(self)weakSelf = self;
-    [self.pingHelper pingWithBlock:^(BOOL isSuccess)
+    [self.pingHelper pingWithBlock:^(BOOL isSuccess, NSTimeInterval latency)
      {
          __strong __typeof(weakSelf)strongSelf = weakSelf;
+         strongSelf.latency = latency;
          if (isSuccess)
          {
              ReachabilityStatus status = [self currentReachabilityStatus];
@@ -215,13 +248,20 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
          }
          else
          {
-             // delay 1 seconds, then make a double check.
-             dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC));
-             __weak __typeof(self)weakSelf = self;
-             dispatch_after(time, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                 __strong __typeof(weakSelf)self = weakSelf;
-                 [self makeDoubleCheck:asyncHandler];
-             });
+             if ([self isVPNOn])
+             {
+                 // special case, VPN connected. Just ignore the ping result.
+             }
+             else
+             {
+                 // delay 1 seconds, then make a double check.
+                 dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1*NSEC_PER_SEC));
+                 __weak __typeof(self)weakSelf = self;
+                 dispatch_after(time, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                     __strong __typeof(weakSelf)self = weakSelf;
+                     [self makeDoubleCheck:asyncHandler];
+                 });
+             }
          }
      }];
 }
@@ -247,7 +287,7 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
         case RRStateLoading:
         {
             // status on loading, return local status temporary.
-            return (ReachabilityStatus)(GLocalConnection.currentLocalConnectionStatus);
+            return (ReachabilityStatus)(self.localObserver.currentLocalConnectionStatus);
         }
             
         default:
@@ -290,8 +330,24 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
 {
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
     {
-        CTTelephonyNetworkInfo *teleInfo= [[CTTelephonyNetworkInfo alloc] init];
-        NSString *accessString = teleInfo.currentRadioAccessTechnology;
+        CTTelephonyNetworkInfo *teleInfo = [[CTTelephonyNetworkInfo alloc] init];
+        NSString *accessString = @"";
+        
+        if (@available(iOS 12.0, *))
+        {
+            // dual sim, maybe dual cards, simple choose one.
+            NSDictionary *infoDic = teleInfo.serviceCurrentRadioAccessTechnology;
+            NSArray *accessStrings = infoDic.allValues;
+            if (accessStrings.count > 0)
+            {
+                accessString = accessStrings[0];
+            }
+        }
+        else
+        {
+            accessString = teleInfo.currentRadioAccessTechnology;
+        }
+        
         if ([accessString length] > 0)
         {
             return [self accessTypeForString:accessString];
@@ -311,8 +367,9 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
 - (void)makeDoubleCheck:(void (^)(ReachabilityStatus status))asyncHandler
 {
     __weak __typeof(self)weakSelf = self;
-    [self.pingChecker pingWithBlock:^(BOOL isSuccess) {
+    [self.pingChecker pingWithBlock:^(BOOL isSuccess, NSTimeInterval latency) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
+        strongSelf.latency = latency;
         ReachabilityStatus status = [strongSelf currentReachabilityStatus];
         
         NSDictionary *inputDic = @{kEventKeyID:@(RREventPingCallback), kEventKeyParam:@(isSuccess)};
@@ -394,7 +451,11 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
 
 - (WWANAccessType)accessTypeForString:(NSString *)accessString
 {
-    if ([self.typeStrings4G containsObject:accessString])
+    if ([self.typeStrings5G containsObject:accessString])
+    {
+        return WWANType5G;
+    }
+    else if ([self.typeStrings4G containsObject:accessString])
     {
         return WWANType4G;
     }
@@ -443,6 +504,73 @@ NSString *const kRealReachabilityChangedNotification = @"kRealReachabilityChange
             }
         }
     }
+}
+
+- (BOOL)isVPNOn
+{
+    BOOL flag = NO;
+    NSString *version = [UIDevice currentDevice].systemVersion;
+    // need two ways to judge this.
+    if (version.doubleValue >= 9.0)
+    {
+        NSDictionary *dict = CFBridgingRelease(CFNetworkCopySystemProxySettings());
+        NSArray *keys = [dict[@"__SCOPED__"] allKeys];
+        for (NSString *key in keys) {
+            if ([key rangeOfString:@"tap"].location != NSNotFound ||
+                [key rangeOfString:@"tun"].location != NSNotFound ||
+                [key rangeOfString:@"ipsec"].location != NSNotFound ||
+                [key rangeOfString:@"ppp"].location != NSNotFound){
+                flag = YES;
+                break;
+            }
+        }
+    }
+    else
+    {
+        struct ifaddrs *interfaces = NULL;
+        struct ifaddrs *temp_addr = NULL;
+        int success = 0;
+        
+        // retrieve the current interfaces - returns 0 on success
+        success = getifaddrs(&interfaces);
+        if (success == 0)
+        {
+            // Loop through linked list of interfaces
+            temp_addr = interfaces;
+            while (temp_addr != NULL)
+            {
+                NSString *string = [NSString stringWithFormat:@"%s" , temp_addr->ifa_name];
+                if ([string rangeOfString:@"tap"].location != NSNotFound ||
+                    [string rangeOfString:@"tun"].location != NSNotFound ||
+                    [string rangeOfString:@"ipsec"].location != NSNotFound ||
+                    [string rangeOfString:@"ppp"].location != NSNotFound)
+                {
+                    flag = YES;
+                    break;
+                }
+                temp_addr = temp_addr->ifa_next;
+            }
+        }
+        
+        // Free memory
+        freeifaddrs(interfaces);
+    }
+    
+    if (_vpnFlag != flag)
+    {
+        // reset flag
+        _vpnFlag = flag;
+        
+        // post notification
+        __weak __typeof(self)weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            [[NSNotificationCenter defaultCenter] postNotificationName:kRRVPNStatusChangedNotification
+                                                                object:strongSelf];
+        });
+    }
+    
+    return flag;
 }
 
 @end

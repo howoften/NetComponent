@@ -47,7 +47,6 @@ pthread_mutex_t mutex_lock;
 }
 
 - (NSString *)callRequestWithRequestModel:(LLBaseRequestModel *)requestModel {
-    typeof(self) __weak weakSelf = self;
     __block NSURLSessionDataTask *task = [[NSURLSessionDataTask alloc] init];
      task = [LLRequestDispatch generateTaskWithRequestDataModel:requestModel progress:^(NSProgress *progress) {
         if (requestModel.progress) {
@@ -55,16 +54,17 @@ pthread_mutex_t mutex_lock;
         }
     } complete:^(NSDictionary *resp) {
         if (requestModel.complete) {
-            requestModel.complete(resp);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                requestModel.complete(resp);
+            });
         }
         
+        __strong LLBaseRequestModel *reqModel = requestModel;
         NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
-        if (Response_Success_Code([resp[@"code"] integerValue])) {
-            [weakSelf resendRequestModel:requestModel errorCode:[resp[@"code"] integerValue] requestId:requestID];
-        }
+        [self resendRequestModel:requestModel responseObj:resp requestId:requestID];
         
         pthread_mutex_lock(&mutex_lock);
-        [weakSelf.taskTable removeObjectForKey:requestID];
+        [self.taskTable removeObjectForKey:requestID];
         pthread_mutex_unlock(&mutex_lock);
     }];
     
@@ -105,13 +105,14 @@ pthread_mutex_t mutex_lock;
             }
         } complete:^(NSDictionary *resp) {
             if (obj.complete) {
-                obj.complete(resp);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    obj.complete(resp);
+                });
             }
             
             NSString *requestID = [NSString stringWithFormat:@"%x", (unsigned int)task];
-            if (Response_Success_Code([resp[@"code"] integerValue])) {
-                [weakSelf resendRequestModel:obj errorCode:[resp[@"code"] integerValue] requestId:requestID];
-            }
+            [weakSelf resendRequestModel:obj responseObj:resp requestId:requestID];
+            
             pthread_mutex_lock(&mutex_lock);
             [weakSelf.taskTable removeObjectForKey:requestID];
             [requestQueue removeObject:obj];
@@ -163,47 +164,32 @@ pthread_mutex_t mutex_lock;
 }
 
 #pragma mark --- 复制请求
-- (void)resendRequestModel:(LLBaseRequestModel *)requestModel errorCode:(NSInteger)code requestId:(NSString *)_id {
-    if (requestModel.retryHandler) {
-        __block NSInteger tryCount = requestModel.retryHandler.maxRetryCount.integerValue;
-        __block NSTimeInterval duration = requestModel.retryHandler.maxRetryDuration.doubleValue;
-        __block NSTimeInterval retryInterval = requestModel.retryHandler.retryInterval.doubleValue;
-        pthread_mutex_lock(&mutex_lock);
-        double timeCost = [[NSDate date] timeIntervalSince1970] - [self.taskStartTime[_id] doubleValue];
-        NSInteger tryCountCost = [self.taskTryCount[_id] integerValue];
-        pthread_mutex_unlock(&mutex_lock);
-        if (requestModel.retryHandler.maxRetryDuration) {
-            if (tryCount > 0 && duration > 0 && timeCost < duration && tryCountCost < tryCount) {
-                if (requestModel.retryHandler.errorCode.integerValue == code) {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [self callRequestWithRequestModel:requestModel];
-                    });
-                }else if (requestModel.retryHandler.retryCondition) {
-                    if (requestModel.retryHandler.retryCondition()) {
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [self callRequestWithRequestModel:requestModel];
-                        });
-                        
-                    }
-                }
-            }
-        }else {
-            if (tryCount > 0 && tryCountCost < tryCount) {
-                if (requestModel.retryHandler.errorCode.integerValue == code) {
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [self callRequestWithRequestModel:requestModel];
-                    });
-                }else if (requestModel.retryHandler.retryCondition) {
-                    if (requestModel.retryHandler.retryCondition()) {
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [self callRequestWithRequestModel:requestModel];
-                        });
-                    }
-                }
-            }
-            
-        }
+- (void)resendRequestModel:(LLBaseRequestModel *)requestModel responseObj:(id)responseObj requestId:(NSString *)_id {
+    if (!requestModel.retryHandler.retryCondition || !requestModel.retryHandler.retryCondition(responseObj)) {
+        return;
     }
+    __block NSInteger tryCount = requestModel.retryHandler.maxRetryCount.integerValue;
+    __block NSTimeInterval duration = requestModel.retryHandler.maxRetryDuration.doubleValue;
+    __block NSTimeInterval retryInterval = requestModel.retryHandler.retryInterval.doubleValue;
+    pthread_mutex_lock(&mutex_lock);
+    double timeCost = [[NSDate date] timeIntervalSince1970] - [self.taskStartTime[_id] doubleValue];
+    NSInteger tryCountCost = [self.taskTryCount[_id] integerValue];
+    pthread_mutex_unlock(&mutex_lock);
+    if (requestModel.retryHandler.maxRetryDuration) {
+        if (tryCount > 0 && duration > 0 && timeCost < duration && tryCountCost < tryCount) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self callRequestWithRequestModel:requestModel];
+            });
+        }
+    }else {
+        if (tryCount > 0 && tryCountCost < tryCount) {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(retryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self callRequestWithRequestModel:requestModel];
+            });
+        }
+        
+    }
+    
 }
 
 

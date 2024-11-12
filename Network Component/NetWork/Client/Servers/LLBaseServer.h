@@ -29,7 +29,7 @@
 
 @end
 
-@interface LLBaseServer : NSObject
+@interface LLBaseServer : NSObject<LLBaseServiceProtocol>
 
 @property (nonatomic, assign, readonly)LLEnvironmentType environmentType;
 

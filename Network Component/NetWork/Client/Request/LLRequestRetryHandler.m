@@ -15,7 +15,7 @@
     self = [super init];
     if (self) {
         //default value
-        self.maxRetryCount = @0;
+        self.maxRetryCount = @(INT64_MAX);
         self.retryInterval = @(0.0);
     }
     return self;

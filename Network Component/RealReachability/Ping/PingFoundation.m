@@ -314,7 +314,7 @@ static uint16_t in_cksum(const void *buffer, size_t bufferLen) {
                            CFSocketGetNative(self.socket),
                            packet.bytes,
                            packet.length,
-                           0,
+                           SO_NOSIGPIPE,
                            self.hostAddress.bytes,
                            (socklen_t) self.hostAddress.length
                            );
@@ -627,6 +627,7 @@ static void SocketReadCallback(CFSocketRef s, CFSocketCallBackType type, CFDataR
     fd = -1;
     err = 0;
     switch (self.hostAddressFamily) {
+            // gzw here to decide what to use! see what is going on in iOS12! TODO:
         case AF_INET: {
             fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP);
             if (fd < 0) {
@@ -656,8 +657,6 @@ static void SocketReadCallback(CFSocketRef s, CFSocketCallBackType type, CFDataR
         self.socket = (CFSocketRef) CFAutorelease( CFSocketCreateWithNative(NULL, fd, kCFSocketReadCallBack, SocketReadCallback, &context) );
    
         // The socket will now take care of cleaning up our file descriptor.
-        
-        fd = -1;
         
         rls = CFSocketCreateRunLoopSource(NULL, self.socket, 0);
         

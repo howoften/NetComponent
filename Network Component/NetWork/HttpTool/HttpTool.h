@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface HttpTool : NSObject
+@property(nonatomic, class)BOOL disableProxySetting;
 
 - (void)refreshHTTPRequestHeader:(NSDictionary<NSString *, NSString *> *)header;
 
@@ -28,7 +29,15 @@
  *  @param success      请求成功的回调
  *  @param failure      请求失败的回调
  */
-- (NSURLSessionDataTask *)postWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+- (NSURLSessionDataTask *)postFormUrlEncodedWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
+/**
+ *  post请求
+ *  @param urlString    请求的网址字符串
+ *  @param parameters   请求的参数
+ *  @param success      请求成功的回调
+ *  @param failure      请求失败的回调
+ */
+- (NSURLSessionDataTask *)postJsonWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure;
 /**
  *  post请求 param以表单形式提交
  *  @param urlString    请求的网址字符串

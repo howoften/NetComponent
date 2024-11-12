@@ -10,7 +10,7 @@
 #import "ServerConfig.h"
 #define Cannot_Serialize_Response_Code @(-5000)
 #define Parse_Response_Faile @(-5001)
-#define Unpresent_Response_Code @(-4004)
+#define Unpresent_Response_Code (-4004)
 
 @interface LLResponseFormatter ()
 
@@ -68,19 +68,25 @@
 - (NSDictionary *)handleNormalResponse:(NSDictionary *)response {
     NSArray *codeSet = self.standardResponse[@"code"];
     NSString *_msg = @"Server response body ";
-    __block NSNumber *code = Unpresent_Response_Code;
+    NSMutableDictionary *mutableResp = response.mutableCopy;
+    __block NSNumber *code = @Unpresent_Response_Code;
     [codeSet enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *key = [NSString stringWithFormat:@"%@", obj];
         if (!response[key]) { return; }
         if ([response[key] respondsToSelector:@selector(integerValue)]) {
             code = [NSNumber numberWithInteger:[response[key] integerValue]];
+            [mutableResp removeObjectForKey:key];
+            mutableResp[@"code"] = code;
             *stop = YES;
+            return;
         }
         code = response[key];
+        [mutableResp removeObjectForKey:key];
+        mutableResp[@"code"] = code;
         *stop = YES;
     }];
     
-    if ([code isEqualToNumber:Unpresent_Response_Code]) {
+    if (code.intValue == (Unpresent_Response_Code) && codeSet.count) {
         _msg = [_msg stringByAppendingString:@"'code',"];
     }
     
@@ -90,11 +96,14 @@
         NSString *key = [NSString stringWithFormat:@"%@", obj];
         if (!response[key]) { return; }
         data = response[key];
+        [self responseNullSafe:data];
+        [mutableResp removeObjectForKey:key];
+        mutableResp[@"data"] = data;
         *stop = YES;
         
     }];
     
-    if (data == response) {
+    if (data == response && dataSet.count) {
         _msg = [_msg stringByAppendingString:@" 'data',"];
     }
     
@@ -105,32 +114,37 @@
         NSString *key = [NSString stringWithFormat:@"%@", obj];
         if (!response[key]) { return; }
         msg = [NSString stringWithFormat:@"%@", response[key]];
+        [mutableResp removeObjectForKey:key];
+        mutableResp[@"msg"] = msg;
         *stop = YES;
     }];
     
-    if (msg.length < 1) {
+    if (msg.length < 1 && msgSet.count) {
         _msg = [_msg stringByAppendingString:@" 'msg', "];
     }
     
     if ([_msg containsString:@"code"] || [_msg containsString:@"data"] || [_msg containsString:@"msg"]) {
         _msg = [_msg stringByAppendingString:@"not present or not correct formate"];
+        mutableResp = [self appendUIMessageInResponseBody: mutableResp];
+        if (Response_Success_Code(code.intValue)) {
+            mutableResp[@"uiMsg"] = _msg;
+        }
+        return mutableResp.copy;
     }else {
         _msg = msg;
+        return mutableResp.copy;
     }
     
-    [self responseNullSafe:data];
-    
-    return [self appendUIMessageInResponseBody: @{@"code":code, @"data":data, @"msg":_msg}];
 }
 
-- (NSDictionary *)appendUIMessageInResponseBody:(NSDictionary *)dic {
+- (NSMutableDictionary *)appendUIMessageInResponseBody:(NSMutableDictionary *)dic {
     if (!dic[@"code"]) {
         return dic;
     }
-    NSMutableDictionary *mutableDic = [dic mutableCopy];
+    NSMutableDictionary *mutableDic = dic;
     [mutableDic addEntriesFromDictionary:@{@"uiMsg":[self explainErrorType:dic[@"code"]]}];
     
-    return [mutableDic copy];
+    return mutableDic;
 }
 
 - (NSDictionary *)handleInformalResponse:(id)response {
@@ -333,8 +347,8 @@
     if (!_standardResponse) {
         NSString *filePath = [[NSBundle mainBundle] pathForResource:@"responseFormat" ofType:@"plist"];
         _standardResponse = [NSDictionary dictionaryWithContentsOfFile:filePath];
-        if (!_standardResponse || _standardResponse.allKeys.count < 3) {
-            _standardResponse = @{@"code":@[@"code"], @"data":@[@"data"], @"msg":@[@"msg"]};
+        if (![_standardResponse isKindOfClass:NSDictionary.class]) {
+            _standardResponse = @{};
         }
         
     }

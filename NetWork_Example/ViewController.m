@@ -79,7 +79,7 @@
                                            };
         LLRequestRetryHandler *retry = [[LLRequestRetryHandler alloc] init];
         retry.retryInterval = @3;
-        retry.retryCondition = ^BOOL{
+        retry.retryCondition = ^BOOL(id resp) {
             return YES;
         };
         retry.maxRetryCount = @5;
@@ -104,7 +104,7 @@
 - (LLBaseRequestModel *)greenCloudRequestModel {
     if (!_greenCloudRequestModel) {
         _greenCloudRequestModel = [[LLBaseRequestModel alloc] init];
-        _greenCloudRequestModel.requestType = LLAPIRequestTypePost;
+        _greenCloudRequestModel.requestType = LLAPIRequestTypePostJSON;
         _greenCloudRequestModel.serverType = LLServerGreenCloud;
         _greenCloudRequestModel.requestPath = @"/guardian/open/crm/v2/queryAllIdCodeType";
         _greenCloudRequestModel.parameters = @{

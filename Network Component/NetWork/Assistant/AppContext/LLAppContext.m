@@ -10,6 +10,8 @@
 #import "LLAppContext.h"
 #import "NSString+LLUUID.h"
 #import <UIKit/UIKit.h>
+#import <CoreTelephony/CTCarrier.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
 @implementation LLAppContext
 
@@ -224,6 +226,62 @@
     return [[NSString virtualDeviceUUID] stringByReplacingOccurrencesOfString:@"-" withString:@""];
 }
 
+/// 获取手机SIM卡网络运营商名称
+- (NSString *)carrierName {
+    __block NSString *carrier = nil;
+    CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
+    if (@available(iOS 12.0, *)) {
+        [info.serviceSubscriberCellularProviders enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, CTCarrier * _Nonnull obj, BOOL * _Nonnull stop) {
+            if (!carrier.length) {
+                carrier = obj.carrierName;
+                *stop = YES;
+            }
+        }];
+    }else {
+        CTCarrier *carrierInfo = info.subscriberCellularProvider;
+        carrier = carrierInfo.carrierName;
+    }
+    return carrier;
+}
+/// 获取当前手机SIM卡网络运营商名称
+- (NSString *)chinaCarrierName {
+    __block NSString *mcc = @"", *mnc = @"";
+    CTTelephonyNetworkInfo *info = [[CTTelephonyNetworkInfo alloc] init];
+    if (@available(iOS 12.0, *)) {
+        [info.serviceSubscriberCellularProviders enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, CTCarrier * _Nonnull obj, BOOL * _Nonnull stop) {
+            if (obj.mobileNetworkCode != nil) {
+                mcc = obj.mobileCountryCode ?: @"";
+                mnc = obj.mobileNetworkCode ?: @"";
+                *stop = YES;
+            }
+        }];
+    } else {
+        CTCarrier *carrier = info.subscriberCellularProvider;
+        mcc = carrier.mobileCountryCode ?: @"";
+        mnc = carrier.mobileNetworkCode ?: @"";
+    }
+    if (![mcc isEqualToString:@"460"])  { return nil; }
+    NSString *tempCarrier = nil;
+    if ([@[@"00", @"02", @"04", @"07", @"08", @""]  containsObject:mnc]) {
+        tempCarrier = @"中国移动";
+    } else if ([@[@"01", @"06", @"09"] containsObject:mnc]) {
+        tempCarrier = @"中国联通";
+    } else if ([@[@"03", @"05", @"11"] containsObject:mnc]) {
+        tempCarrier = @"中国电信";
+    } else if ([@[@"15"] containsObject:mnc]) {
+        tempCarrier = @"中国广电";
+    } else if ([@[@"20"] containsObject:mnc]) {
+        tempCarrier = @"中国铁通";
+    }
+    return tempCarrier;
+}
+
+- (CGSize)screenSize {
+    CGFloat height = CGRectGetHeight([UIScreen mainScreen].nativeBounds) / [UIScreen mainScreen].scale;
+    CGFloat width = CGRectGetWidth([UIScreen mainScreen].nativeBounds) / [UIScreen mainScreen].scale;
+    
+    return (CGSize){MIN(height, width), MAX(height, width)};
+}
 + (instancetype)allocWithZone:(struct _NSZone *)zone {
     static LLAppContext *appContext = nil;
     static dispatch_once_t onceToken;

@@ -13,6 +13,7 @@
 @interface HttpTool()
 
 @property (nonatomic, strong)AFHTTPSessionManager *afManager;
+@property (nonatomic, strong)AFHTTPSessionManager *jsonManager;
 
 @property (nonatomic, strong)NSArray *traceUrls;
 
@@ -22,7 +23,7 @@
 @end
 
 @implementation HttpTool
-
+static BOOL _disableProxySetting = NO;
 + (HttpTool *)shareManager {
     static HttpTool *manager = nil;
     static dispatch_once_t onceToken;
@@ -35,14 +36,24 @@
 {
     self = [super init];
     if (self) {
-        self.afManager = [AFHTTPSessionManager manager];
-        self.afManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        NSURLSessionConfiguration *config = NSURLSessionConfiguration.defaultSessionConfiguration;
+        HttpTool.disableProxySetting ? config.connectionProxyDictionary = @{} : NULL;
+        self.afManager = [[AFHTTPSessionManager alloc] initWithBaseURL:nil sessionConfiguration:config];
+        self.afManager.requestSerializer = [AFHTTPRequestSerializer serializer];
         self.afManager.responseSerializer = [AFHTTPResponseSerializer serializer];
         self.afManager.operationQueue.maxConcurrentOperationCount = 5;//请求队列最大并发数
-        self.afManager.requestSerializer.timeoutInterval = 7; //请求超时时间
-        self.afManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", nil];
+        self.afManager.requestSerializer.timeoutInterval = 12; //请求超时时间
+        self.afManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json",@"text/plain",@"text/html", nil];
+            
+        config = NSURLSessionConfiguration.defaultSessionConfiguration;
+        HttpTool.disableProxySetting ? config.connectionProxyDictionary = @{} : NULL;
+        self.jsonManager = [AFHTTPSessionManager manager];
+        self.jsonManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        self.jsonManager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        self.jsonManager.operationQueue.maxConcurrentOperationCount = 5;//请求队列最大并发数
+        self.jsonManager.requestSerializer.timeoutInterval = 12; //请求超时时间
+        self.jsonManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json",@"text/plain",@"text/html", nil];
 
-        [self.afManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [self loadTraceHttpURL];
     }
     return self;
@@ -67,28 +78,29 @@
 - (void)refreshRequestHeader:(NSDictionary *)dic {
     [dic enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [self.afManager.requestSerializer setValue:[NSString stringWithFormat:@"%@", obj] forHTTPHeaderField:key];
+        [self.jsonManager.requestSerializer setValue:[NSString stringWithFormat:@"%@", obj] forHTTPHeaderField:key];
     }];
 }
 
 - (NSURLSessionDataTask *)getWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     __block HttpLog *log = [self bornHttpLog:@"GET" urlString:urlString param:parameters];
-    return [self.afManager GET:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    return [self.afManager GET:urlString parameters:parameters headers:@{} progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
             progress(uploadProgress);
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *serialError = nil;
         id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
-        if (serialError) {
-            if (failure) {
-                failure(serialError);
-            }
-            [self logHttpRequestContext:log resopnse:serialError];
-        }else {
+        if (!serialError) {
             if (success) {
                 success(serialObject);
             }
             [self logHttpRequestContext:log resopnse:serialObject];
+        }else {
+            if (success) {
+                success(responseObject);
+            }
+            [self logHttpRequestContext:log resopnse:responseObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
@@ -98,26 +110,53 @@
         
     }];
 }
-
-- (NSURLSessionDataTask *)postWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
-    __block HttpLog *log = [self bornHttpLog:@"POST-Application/json" urlString:urlString param:parameters];
-    return [self.afManager POST:urlString parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+- (NSURLSessionDataTask *)postFormUrlEncodedWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"POST-Application/x-www-form-urlencoded" urlString:urlString param:parameters];
+    return [self.afManager POST:urlString parameters:parameters headers:@{} progress:^(NSProgress * _Nonnull uploadProgress) {
         if (progress) {
             progress(uploadProgress);
         }
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *serialError = nil;
         id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
-        if (serialError) {
-            if (failure) {
-                failure(serialError);
-            }
-            [self logHttpRequestContext:log resopnse:serialError];
-        }else {
+        if (!serialError) {
             if (success) {
                 success(serialObject);
             }
             [self logHttpRequestContext:log resopnse:serialObject];
+        }else {
+            if (success) {
+                success(responseObject);
+            }
+            [self logHttpRequestContext:log resopnse:responseObject];
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) {
+            failure(error);
+        }
+        [self logHttpRequestContext:log resopnse:error];
+    }];
+
+}
+- (NSURLSessionDataTask *)postJsonWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
+    __block HttpLog *log = [self bornHttpLog:@"POST-Application/json" urlString:urlString param:parameters];
+    return [self.jsonManager POST:urlString parameters:parameters headers:@{} progress:^(NSProgress * _Nonnull uploadProgress) {
+        if (progress) {
+            progress(uploadProgress);
+        }
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSError *serialError = nil;
+        id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
+        if (!serialError) {
+            if (success) {
+                success(serialObject);
+            }
+            [self logHttpRequestContext:log resopnse:serialObject];
+        }else {
+            if (success) {
+                success(responseObject);
+            }
+            [self logHttpRequestContext:log resopnse:responseObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
@@ -130,15 +169,10 @@
 
 - (NSURLSessionDataTask *)postFormDataWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters progress:(void(^)(NSProgress *progress))progress success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     __block HttpLog *log = [self bornHttpLog:@"POST-Form/data" urlString:urlString param:parameters];
-    return [self.afManager POST:urlString parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+    return [self.jsonManager POST:urlString parameters:nil headers:@{} constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [parameters enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
-            if ([obj isKindOfClass:[NSString class]] && ![key isEqualToString:@"dataName"] && ![key isEqualToString:@"fileName"] && ![key isEqualToString:@"mimeType"] && ![key isEqualToString:@"filePath"]) {
-                [formData appendPartWithFormData:[obj dataUsingEncoding:NSUTF8StringEncoding] name:key];
-            }else if ([obj isKindOfClass:[NSArray class]]) {
-                NSSet *set = [NSSet setWithArray:obj];
-                [formData appendPartWithFormData:[NSKeyedArchiver archivedDataWithRootObject:set] name:key];
-            }else if ([obj isKindOfClass:[NSSet class]]) {
-                [formData appendPartWithFormData:[NSKeyedArchiver archivedDataWithRootObject:obj] name:key];
+            if ([key isEqualToString:@"dataName"] || [key isEqualToString:@"fileName"] || [key isEqualToString:@"mimeType"]) {
+                return;
             }else if ([obj isKindOfClass:[NSData class]]){
                 NSString *dataName = [NSString stringWithFormat:@"%@", parameters[@"dataName"]];
                 dataName = dataName.length > 0 ? dataName : @"file";
@@ -165,7 +199,9 @@
                 if (error) {
                     failure(error);
                 }
-            }else {
+            }else if ([obj isKindOfClass:[NSString class]]) {
+                [formData appendPartWithFormData:[obj dataUsingEncoding:NSUTF8StringEncoding] name:key];
+            }else if ([obj isKindOfClass:[NSArray class]] || [obj isKindOfClass:[NSDictionary class]]) {
                 NSError *error = nil;
                 NSData *convert = [NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:&error];
                 if (!error) {
@@ -173,7 +209,8 @@
                 }else {
                     NSLog(@"###Not support Form data key type %@", NSStringFromClass([obj class]));
                 }
-                
+            }else if ([obj respondsToSelector:@selector(encodeWithCoder:)]) {
+                [formData appendPartWithFormData:[NSKeyedArchiver archivedDataWithRootObject:obj] name:key];
             }
         }];
     } progress:^(NSProgress * _Nonnull uploadProgress) {
@@ -183,16 +220,16 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *serialError = nil;
         id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
-        if (serialError) {
-            if (failure) {
-                failure(serialError);
-            }
-            [self logHttpRequestContext:log resopnse:serialError];
-        }else {
+        if (!serialError) {
             if (success) {
                 success(serialObject);
             }
             [self logHttpRequestContext:log resopnse:serialObject];
+        }else {
+            if (success) {
+                success(responseObject);
+            }
+            [self logHttpRequestContext:log resopnse:responseObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
@@ -204,19 +241,19 @@
 
 - (NSURLSessionDataTask *)putWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     __block HttpLog *log = [self bornHttpLog:@"PUT" urlString:urlString param:parameters];
-    return [self.afManager PUT:urlString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    return [self.jsonManager PUT:urlString parameters:parameters headers:@{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *serialError = nil;
         id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
-        if (serialError) {
-            if (failure) {
-                failure(serialError);
-            }
-            [self logHttpRequestContext:log resopnse:serialError];
-        }else {
+        if (!serialError) {
             if (success) {
                 success(serialObject);
             }
             [self logHttpRequestContext:log resopnse:serialObject];
+        }else {
+            if (success) {
+                success(responseObject);
+            }
+            [self logHttpRequestContext:log resopnse:responseObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
@@ -228,19 +265,19 @@
 
 - (NSURLSessionDataTask *)deleteWithURLString:(NSString *)urlString parameters:(NSDictionary *)parameters success:(void(^)(id responseObject))success failure:(void(^)(NSError *error))failure {
     __block HttpLog *log = [self bornHttpLog:@"DELETE" urlString:urlString param:parameters];
-    return [self.afManager DELETE:urlString parameters:parameters success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    return [self.jsonManager DELETE:urlString parameters:parameters headers:@{} success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSError *serialError = nil;
         id serialObject = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:&serialError];
-        if (serialError) {
-            if (failure) {
-                failure(serialError);
-            }
-            [self logHttpRequestContext:log resopnse:serialError];
-        }else {
+        if (!serialError) {
             if (success) {
                 success(serialObject);
             }
             [self logHttpRequestContext:log resopnse:serialObject];
+        }else {
+            if (success) {
+                success(responseObject);
+            }
+            [self logHttpRequestContext:log resopnse:responseObject];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         if (failure) {
@@ -315,5 +352,13 @@
         [_formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss.SSS"];
     }
     return _formatter;
+}
+
++ (void)setDisableProxySetting:(BOOL)disableProxySetting {
+    _disableProxySetting = disableProxySetting;
+}
+
++ (BOOL)disableProxySetting {
+    return _disableProxySetting;
 }
 @end

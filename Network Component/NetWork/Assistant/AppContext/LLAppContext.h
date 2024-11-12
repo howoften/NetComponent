@@ -22,5 +22,7 @@
 @property (nonatomic, copy, readonly) NSString *device_model;      //设备型号
 @property (nonatomic, copy, readonly) NSString *qtime;        //发送请求的时间
 @property (nonatomic, copy, readonly) NSString *device_id;
-
+@property (nonatomic, copy, readonly) NSString *carrierName;
+@property (nonatomic, copy, readonly) NSString *chinaCarrierName;
+@property (nonatomic, assign, readonly) CGSize screenSize;
 @end

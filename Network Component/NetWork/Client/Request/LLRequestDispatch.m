@@ -39,15 +39,15 @@
         NSMutableDictionary *realHeader = [NSMutableDictionary dictionaryWithDictionary:commonHeader ?: @{}];
         [realHeader addEntriesFromDictionary:requestModel.headerParameters];
         
-        NSString *urlStr = [server.hostAddress stringByAppendingString:requestModel.requestPath ?: @""];
-        return [self sendHTTPRequest:server urlStr:urlStr requestType:requestModel.requestType params:realParam uploadData:requestModel.uploadData header:realHeader progress:progress complete:complete];
+        NSString *urlStr = [server.hostAddress ?: @"" stringByAppendingString:requestModel.requestPath ?: @""];
+        return [self sendHTTPRequest:server urlStr:urlStr requestType:requestModel.requestType params:realParam uploadData:requestModel.uploadData header:realHeader rawResponse:requestModel.returnRawResponse progress:progress complete:complete];
         
     }
     return nil;
 }
 
 
-+ (NSURLSessionDataTask *)sendHTTPRequest:(LLBaseServer <LLBaseServiceProtocol> *)server urlStr:(NSString *)urlStr requestType:(LLAPIRequestType)requestType params:(NSDictionary *)params uploadData:(NSData *)uploadData header:(NSDictionary *)header progress:(void(^)(NSProgress *))progress complete:(void(^)(NSDictionary *resp))complete {
++ (NSURLSessionDataTask *)sendHTTPRequest:(LLBaseServer <LLBaseServiceProtocol> *)server urlStr:(NSString *)urlStr requestType:(LLAPIRequestType)requestType params:(NSDictionary *)params uploadData:(NSData *)uploadData header:(NSDictionary *)header rawResponse:(BOOL)rawResponse progress:(void(^)(NSProgress *))progress complete:(void(^)(NSDictionary *resp))complete {
     [server.httpTool refreshHTTPRequestHeader:header];
     if (requestType == LLAPIRequestTypeGet) {
         return [server.httpTool getWithURLString:urlStr parameters:params progress:^(NSProgress *t_progress) {
@@ -56,35 +56,49 @@
             }
         } success:^(id responseObject) {
             if (complete) {
-                complete([LLResponseFormatter formatServerResponse:responseObject]);
+                complete(rawResponse ? responseObject : [LLResponseFormatter formatServerResponse:responseObject]);
             }
         } failure:^(NSError *error) {
             if (complete) {
                 complete([LLResponseFormatter formatServerResponse:error]);
             }
         }];
-    }else if (requestType == LLAPIRequestTypePost) {
-        return [server.httpTool postWithURLString:urlStr parameters:params progress:^(NSProgress *t_progress) {
+    }else if (requestType == LLAPIRequestTypePostJSON) {
+        return [server.httpTool postJsonWithURLString:urlStr parameters:params progress:^(NSProgress *t_progress) {
             if (progress) {
                 progress(t_progress);
             }
         } success:^(id responseObject) {
             if (complete) {
-                complete([LLResponseFormatter formatServerResponse:responseObject]);
+                complete(rawResponse ? responseObject : [LLResponseFormatter formatServerResponse:responseObject]);
             }
         } failure:^(NSError *error) {
             if (complete) {
                 complete([LLResponseFormatter formatServerResponse:error]);
             }
         }];
-    }else if (requestType == LLAPIRequestTypePostForm) {
+    }else if (requestType == LLAPIRequestTypePostFormUrlEncoded) {
+        return [server.httpTool postFormUrlEncodedWithURLString:urlStr parameters:params progress:^(NSProgress *t_progress) {
+            if (progress) {
+                progress(t_progress);
+            }
+        } success:^(id responseObject) {
+            if (complete) {
+                complete(rawResponse ? responseObject : [LLResponseFormatter formatServerResponse:responseObject]);
+            }
+        } failure:^(NSError *error) {
+            if (complete) {
+                complete([LLResponseFormatter formatServerResponse:error]);
+            }
+        }];
+    }else if (requestType == LLAPIRequestTypePostFormData) {
         return [server.httpTool postFormDataWithURLString:urlStr parameters:params progress:^(NSProgress *t_progress) {
             if (progress) {
                 progress(t_progress);
             }
         } success:^(id responseObject) {
             if (complete) {
-                complete([LLResponseFormatter formatServerResponse:responseObject]);
+                complete(rawResponse ? responseObject : [LLResponseFormatter formatServerResponse:responseObject]);
             }
         } failure:^(NSError *error) {
             if (complete) {
@@ -94,7 +108,7 @@
     }else if (requestType == LLAPIRequestTypePut) {
         return [server.httpTool putWithURLString:urlStr parameters:params success:^(id responseObject) {
             if (complete) {
-                complete([LLResponseFormatter formatServerResponse:responseObject]);
+                complete(rawResponse ? responseObject : [LLResponseFormatter formatServerResponse:responseObject]);
             }
         } failure:^(NSError *error) {
             if (complete) {
@@ -104,7 +118,7 @@
     }else if (requestType == LLAPIRequestTypeDelete) {
         return [server.httpTool deleteWithURLString:urlStr parameters:params success:^(id responseObject) {
             if (complete) {
-                complete([LLResponseFormatter formatServerResponse:responseObject]);
+                complete(rawResponse ? responseObject : [LLResponseFormatter formatServerResponse:responseObject]);
             }
         } failure:^(NSError *error) {
             if (complete) {
@@ -118,7 +132,7 @@
             }
         } success:^(id responseObject) {
             if (complete) {
-                complete([LLResponseFormatter formatServerResponse:responseObject]);
+                complete(rawResponse ? responseObject : [LLResponseFormatter formatServerResponse:responseObject]);
             }
         } failure:^(NSError *error) {
             if (complete) {

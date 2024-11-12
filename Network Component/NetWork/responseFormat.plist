@@ -11,10 +11,12 @@
 	<array>
 		<string>data</string>
 		<string>retVal</string>
+		<string>responseData</string>
 	</array>
 	<key>msg</key>
 	<array>
 		<string>msg</string>
+		<string>message</string>
 	</array>
 </dict>
 </plist>

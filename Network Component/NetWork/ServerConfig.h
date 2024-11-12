@@ -13,10 +13,13 @@
 
 #if !defined LLSERVER_ENV_DEV && !defined LLSERVER_ENV_TEST && !defined LLSERVER_ENV_RELEASE && !defined LLSERVER_ENV_PRERELEASE
 
-//#define LLSERVER_ENV_DEV
-#define LLSERVER_ENV_TEST
-//#define LLSERVER_ENV_RELEASE
-//#define LLSERVER_ENV_PRERELEASE
+#if PROD
+    #define LLSERVER_ENV_RELEASE
+#elif GTCRS-TEST
+    #define LLSERVER_ENV_TEST
+#else
+    #define LLSERVER_ENV_DEV
+#endif
 
 #endif
 
@@ -35,13 +38,16 @@ typedef NS_ENUM(NSUInteger, LLEnvironmentType) {
 typedef NS_ENUM(NSUInteger, LLServerType) {
     LLServerWX,
     LLServerApple,
-    LLServerGreenCloud
+    LLServerGreenCloud,
+    LLServerGreenTree,
+    LLServerNone
 };
 
 typedef NS_ENUM(NSUInteger, LLAPIRequestType) {
      LLAPIRequestTypeGet,
-     LLAPIRequestTypePost,
-     LLAPIRequestTypePostForm,
+     LLAPIRequestTypePostJSON,
+     LLAPIRequestTypePostFormUrlEncoded,
+     LLAPIRequestTypePostFormData,
      LLAPIRequestTypePut,
      LLAPIRequestTypeDelete,
      LLAPIRequestTypeUpload

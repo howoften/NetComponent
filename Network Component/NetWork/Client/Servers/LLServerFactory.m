@@ -10,6 +10,7 @@
 #import "WXServer.h"
 #import "AppleServer.h"
 #import "GreenCloudServer.h"
+#import "GreenTreeServer.h"
 
 @interface LLServerFactory ()
 
@@ -42,7 +43,11 @@
         case LLServerGreenCloud:
             server = [GreenCloudServer sharedInstance];
             break;
+        case LLServerGreenTree:
+            server = [GreenTreeServer sharedInstance];
+            break;
         default:
+            server = [LLBaseServer sharedInstance];
             break;
     }
     return server;

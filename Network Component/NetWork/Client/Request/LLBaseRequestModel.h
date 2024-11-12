@@ -17,7 +17,7 @@
 @property (nonatomic, assign)LLAPIRequestType requestType;
 @property (nonatomic, strong)NSDictionary *headerParameters;
 @property (nonatomic, strong)NSDictionary *parameters;
-//@property (nonatomic, strong)NSString *signToken;
+@property (nonatomic, assign)BOOL returnRawResponse;
 //@property (nonatomic, strong)NSString *signRepresentKey;
 //@property (nonatomic, strong)NSArray<NSString *> *signParamKeys;//待签名字段  ,signParamKeys 为 parameters子集
 @property (nonatomic, strong)void(^complete)(NSDictionary *response);
